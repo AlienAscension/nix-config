@@ -1,0 +1,9 @@
+# nix build outputs
+result
+result-*
+
+# editor
+.direnv/
+.envrc
+
+# DO NOT ignore .age files — they are encrypted and must be committed
