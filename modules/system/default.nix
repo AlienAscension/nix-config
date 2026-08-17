@@ -117,6 +117,12 @@
     config.common.default = "*";
   };
 
+  # Display manager (SDDM, for Hyprland session)
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+
   # Zsh as default shell for all users
   programs.zsh.enable = true;
 }
