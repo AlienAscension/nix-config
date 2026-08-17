@@ -1,9 +1,9 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, osConfig, ... }:
 
 let
   # Machine-specific monitor config
   # Desktop: 180Hz; Laptop: default
-  isLaptop = config.networking.hostName == "laptop";
+  isLaptop = osConfig.networking.hostName == "lenovo-laptop";
 in
 {
   wayland.windowManager.hyprland = {

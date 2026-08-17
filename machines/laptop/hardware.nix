@@ -44,8 +44,7 @@
 
   # Snapper for automated snapshots
   services.snapper = {
-    enable = true;
-    snapshotRootOnCalendar = "hourly";
+    snapshotInterval = "hourly";
     configs = {
       root = {
         SUBVOLUME = "/";

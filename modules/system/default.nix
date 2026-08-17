@@ -1,6 +1,9 @@
 { pkgs, inputs, ... }:
 
 {
+  # Allow unfree packages (e.g. discord)
+  nixpkgs.config.allowUnfree = true;
+
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -75,9 +78,9 @@
   # Fonts
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    nerd-fonts.jetbrains-mono
   ];
 
   # Base system packages

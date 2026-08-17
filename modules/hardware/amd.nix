@@ -9,7 +9,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    mesa-utils
+    mesa-demos
     radeontop
   ];
 }
