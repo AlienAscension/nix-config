@@ -9,7 +9,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  hardware.graphics.enable32 = true;
+  hardware.graphics.enable32Bit = true;
 
   environment.systemPackages = [ pkgs.nvidia-settings ];
 
