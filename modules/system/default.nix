@@ -47,6 +47,9 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" "network" "podman" ];
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDVVBEczaQJD335qqxJIy8Su2/s4d1p93XOSUfr64eIzPPOyQmkqOzLxnm5LZxinahUOfHUsIcnqygJsc2oGDmqQzU0miiHdao8Pg/u0qYoPkaiinupTqopr+cTr7fj+/TGqFSM/fJSBWzpDIMsU5+Fc1yGWbTy2HdT/LaPMXo9DPEbFgboclkdGbXPf45uR+Nqz+86iSlgv2+jTZZknXupYI5aBNAOpOtyZzYtVcDR7jLA4Kqkmo2qkjHa7hpPVozdkSWQdVg7aWOVgFo+FDEl+iSpHpryiqG13Z2uNIdAVntaNBcBUJy2nTPk8Sfa94j72pW7a2VuNlUiE2mJP8TKwsSrkUXhmJ7jchPboOniRiI82qGdd2OT9d6T3heYEu0zSWqJZyqawO+NKxHdukZl8ABicKrkYPF/lE6OcsJid/HXVbgHDTqjQ2GnDixxfj6HACqW28f8sWfFvko44kUj89lRKyF6OVpEqHkVQrPXyriKE/hELKLY1etBguL3L2s3F5/r2G9HFqKO2PRcpNSFqi/Ll8m9ZAoxeL3llWNsmkjXj5Xi7TeES5Q4J+mAgSoAARFwPGHmAx8UcT9CQDskGKgTeT34/FOa7SAYU8BYN0Tf6i3GSqwPLLtLqraQkDZaEiP5zhj5L4nQks3vkgBJU7OaqFawZHrtHyGc9askVQ== linus.breitenberger@gmail.com"
+  ];
   };
 
   # Work user option — disabled by default, enabled per-machine
