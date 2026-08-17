@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration with Hyprland for desktop and laptop";
+  description = "NixOS configuration with Hyprland for desktop, laptop, geekom, and aarch64 VM";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
@@ -20,36 +20,12 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, hyprland, agenix, ... }:
+  outputs = inputs @ { nixpkgs, home-manager, hyprland, agenix, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-
-      sharedModules = [
-        ./modules/system/default.nix
-        agenix.nixosModules.default
-        home-manager.nixosModules.home-manager
-      ];
+      mkSystem = import ./lib/mksystem.nix { inherit nixpkgs inputs; };
     in
     {
-      nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = sharedModules ++ [
-          ./machines/desktop/configuration.nix
-          ./machines/desktop/hardware.nix
-          ./machines/desktop/secrets.nix
-        ];
-        specialArgs = { inherit inputs; };
-      };
-
-      nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = sharedModules ++ [
-          ./machines/laptop/configuration.nix
-          ./machines/laptop/hardware.nix
-          ./machines/laptop/secrets.nix
-        ];
-        specialArgs = { inherit inputs; };
-      };
+      nixosConfigurations.desktop = mkSystem "desktop" { system = "x86_64-linux"; };
+      nixosConfigurations.laptop = mkSystem "laptop" { system = "x86_64-linux"; };
     };
 }
