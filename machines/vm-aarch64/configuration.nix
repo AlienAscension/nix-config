@@ -13,7 +13,7 @@
   # (aarch64 build of the Hyprland flake package)
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   };
 
   # Home Manager
