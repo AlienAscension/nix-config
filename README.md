@@ -1,39 +1,44 @@
 # NixOS Hyprland Flake
 
-NixOS configuration for desktop (Intel i7-8700K + NVIDIA RTX 2070) and laptop (AMD Ryzen 5 5500U).
+NixOS configuration managed with flakes, Home Manager, Hyprland, and agenix.
 
-## Fresh Install
+## Machines
 
-1. Boot NixOS ISO
-2. Partition disk: EFI (512MB FAT32), root (rest, encrypted with LUKS)
-3. Format: `cryptsetup luksFormat`, `mkfs.btrfs` with subvolumes @, @home, @nix, @persist
-4. Mount everything under `/mnt`
-5. Generate base config: `nixos-generate-config --root /mnt`
-6. Clone this repo to `/mnt/etc/nixos` (or anywhere)
-7. Edit `machines/<host>/hardware.nix` — fill in real UUIDs
-8. Install: `nixos-install --flake .#desktop` (or `.#laptop`)
-9. Reboot, login as linus
+| Target | Hardware | Arch |
+|--------|----------|------|
+| `desktop` | Intel i7-8700K + NVIDIA RTX 2070 | x86_64 |
+| `laptop` | AMD Ryzen 5 5500U | x86_64 |
+| `geekom` | Geekom IT13 Max (Intel Ultra 9-185H, 24GB LPDDR) | x86_64 |
+| `vm-aarch64` | NixOS VM on Apple Silicon (MacBook Pro M5, VMware Fusion) | aarch64 |
 
-## Post-Install
+## Installation
 
-### SSH Host Keys (for agenix)
-1. Read host key: `cat /etc/ssh/ssh_host_ed25519_key.pub`
-2. Add to `secrets/secrets.nix` as `desktop_host_key` or `laptop_host_key`
-3. `git commit && nixos-rebuild switch`
+- **Physical machines** (desktop, laptop, geekom): see [`install-physical.md`](install-physical.md)
+- **Apple Silicon VM** (vm-aarch64): see [`install-vm.md`](install-vm.md)
+
+## Rebuilding
+
+```sh
+nh os switch .   # rebuild + switch
+nh os test .     # rebuild + test (non-persistent)
+nh os build .    # build only
+```
+
+## Post-install
+
+### SSH host keys (for agenix)
+1. `cat /etc/ssh/ssh_host_ed25519_key.pub`
+2. Add to `secrets/secrets.nix` as `<host>_host_key`
+3. `git commit && nh os switch .`
 
 ### Secrets
-1. Install agenix: `nix profile install github:ryantm/agenix`
-2. Edit secret: `agenix -e secrets/linus-ssh-private-key.age`
-3. Uncomment age.secrets block in `machines/<host>/secrets.nix`
+1. `nix profile install github:ryantm/agenix`
+2. `agenix -e secrets/<secret>.age`
+3. Uncomment the `age.secrets` block in `machines/<host>/secrets.nix`
 4. `nh os switch .`
 
 ### p10k
-Run `p10k configure` to generate `~/.p10k.zsh` on first login.
+`p10k configure` on first login.
 
-### krew plugins
-`kubectl krew install klock` (and any other plugins)
-
-## Rebuilding
-- `nh os switch .` — rebuild and switch to new config
-- `nh os test .` — rebuild and test without making it the boot default
-- `nh os build .` — just build, don't switch
+### krew
+`kubectl krew install klock`
