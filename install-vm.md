@@ -148,6 +148,14 @@ cat /etc/ssh/ssh_host_ed25519_key.pub
 
 Add it to `secrets/secrets.nix` as `vm_aarch64_host_key`, add it to the relevant `publicKeys`, commit, pull on the VM, and `nh os switch .`.
 
+### Git user email
+
+The git username (`AlienAscension`) is set declaratively by Home Manager. The email is private and not committed to this repo — set it manually:
+
+```sh
+git config --global user.email <your-email>
+```
+
 ## 11. Hyprland fallback
 
 Hyprland in an aarch64 VM depends on VMware Fusion's 3D acceleration. If Hyprland doesn't render correctly, switch to GNOME as a fallback. In `machines/vm-aarch64/configuration.nix`, replace the Hyprland block with:

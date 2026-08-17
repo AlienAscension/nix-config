@@ -185,6 +185,14 @@ p10k configure
 kubectl krew install klock
 ```
 
+### Git user email
+
+The git username (`AlienAscension`) is set declaratively by Home Manager. The email is private and not committed to this repo — set it manually:
+
+```sh
+git config --global user.email <your-email>
+```
+
 ## 12. Rebuilding later
 
 ```sh

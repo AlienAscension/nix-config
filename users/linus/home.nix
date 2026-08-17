@@ -16,10 +16,8 @@
 
   programs.git = {
     enable = true;
-    settings.user = {
-      name = "linus";
-      email = "linus@example.com";  # Replace with real email
-    };
+    settings.user.name = "AlienAscension";
+    # Email is set manually after install (private): git config --global user.email <email>
   };
 
   # p10k config — symlink the existing ~/.p10k.zsh if present, otherwise
