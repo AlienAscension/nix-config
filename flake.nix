@@ -28,5 +28,6 @@
       nixosConfigurations.desktop = mkSystem "desktop" { system = "x86_64-linux"; };
       nixosConfigurations.laptop = mkSystem "laptop" { system = "x86_64-linux"; };
       nixosConfigurations.geekom = mkSystem "geekom" { system = "x86_64-linux"; };
+      nixosConfigurations.vm-aarch64 = mkSystem "vm-aarch64" { system = "aarch64-linux"; };
     };
 }
