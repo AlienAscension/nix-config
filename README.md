@@ -8,7 +8,7 @@ NixOS configuration managed with flakes, Home Manager, Hyprland, and agenix.
 |--------|----------|------|
 | `desktop` | Intel i7-8700K + NVIDIA RTX 2070 | x86_64 |
 | `laptop` | AMD Ryzen 5 5500U | x86_64 |
-| `geekom` | Geekom IT13 Max (Intel Ultra 9-185H, 24GB LPDDR) | x86_64 |
+| `geekom` | Geekom IT13 Max (Intel Ultra 9-185H) | x86_64 |
 | `vm-aarch64` | NixOS VM on Apple Silicon (MacBook Pro M5, VMware Fusion) | aarch64 |
 
 ## Installation
