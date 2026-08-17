@@ -37,8 +37,3 @@ nh os build .    # build only
 3. Uncomment the `age.secrets` block in `machines/<host>/secrets.nix`
 4. `nh os switch .`
 
-### p10k
-`p10k configure` on first login.
-
-### krew
-`kubectl krew install klock`
