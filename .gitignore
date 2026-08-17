@@ -7,3 +7,6 @@ result-*
 .envrc
 
 # DO NOT ignore .age files — they are encrypted and must be committed
+
+# design/spec docs
+docs/superpowers/
