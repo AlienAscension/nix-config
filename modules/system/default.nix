@@ -14,7 +14,7 @@
     auto-optimise-store = true;
     substituters = [ "https://hyprland.cachix.org" ];
     trusted-public-keys = [
-      "hyprland.cachix.org-1:Gpu9DBjrIDJMWCR1ZEn6uG8m9f9RLfK7tt7D1E8S78="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
 
