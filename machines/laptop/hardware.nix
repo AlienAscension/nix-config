@@ -3,7 +3,7 @@
   # UUIDs must be filled in after partitioning during install.
   boot.initrd.luks.devices = {
     "cryptroot" = {
-      device = "/dev/disk/by-uuid/REPLACE-WITH-ENCRYPTED-PARTITION-UUID";
+      device = "/dev/disk/by-uuid/968cb235-8dec-4e4c-b5c2-de64e557493e";
       allowDiscards = true;
     };
   };
@@ -31,7 +31,7 @@
       options = [ "subvol=@persist" "compress=zstd" "noatime" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/REPLACE-WITH-BOOT-PARTITION-UUID";
+      device = "/dev/disk/by-uuid/291F-0DA5";
       fsType = "vfat";
     };
   };
