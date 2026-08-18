@@ -3,62 +3,21 @@
 let
   # Machine-specific monitor config
   # Desktop: 180Hz; Laptop: default
-  isLaptop = osConfig.networking.hostName == "lenovo-laptop";
+  isLaptop = osConfig.networking.hostName == "laptop";
 in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    settings = {
-      general = {
-        gaps_in = 5;
-        gaps_out = 10;
-        border_size = 2;
-        layout = "dwindle";
-      };
+    configType = "lua";
+    package = null;       # installed by the NixOS module (flake v0.55.4)
+    portalPackage = null; # portal wired up by the NixOS module
+    settings = { };       # avoid HM's broken hl.* Lua generation
+    extraConfig = builtins.readFile ./hyprland.lua
+      + lib.optionalString isLaptop ''
 
-      # Monitors
-      monitor = [
-        "eDP-1,preferred,auto,1"           # laptop screen
-        ",preferred,180Hz,auto"            # desktop / external
-      ];
-
-      # Input
-      input = {
-        kb_layout = "us,de";
-        kb_variant = ",T1";
-        kb_options = "grp:alt_shift_toggle";
-        follow_mouse = 1;
-        touchpad = {
-          natural_scroll = true;
-        };
-      };
-
-      # Keybinds
-      bind = [
-        "SUPER, Return, exec, ghostty"
-        "SUPER, Q, killactive,"
-        "SUPER, M, exit,"
-        "SUPER, E, exec, thunar"
-        "SUPER, Y, exec, ghostty -e yazi"
-        "SUPER, V, togglefloating,"
-        ", F11, fullscreen,"
-      ];
-
-      bindl = lib.optional isLaptop ", switch:Lid Switch, exec, hyprlock";
-
-      # Decoration
-      decorations = {
-        rounding = 10;
-        blur = {
-          enabled = true;
-          size = 3;
-          passes = 1;
-        };
-      };
-
-      # Animations
-      animations.enabled = true;
-    };
+        -- Laptop-only: lock on lid close
+        hl.bind("switch:Lid Switch", hl.dsp.exec_cmd("hyprlock"), { locked = true })
+      '';
   };
 
   # Waybar

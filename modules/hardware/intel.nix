@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  hardware.enableRedistributableFirmware = true;
+
   # Intel i915 (Meteor Lake / Intel Arc integrated) — modesetting driver
   services.xserver.videoDrivers = [ "modesetting" ];
 

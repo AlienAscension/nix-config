@@ -1,6 +1,8 @@
 { pkgs, config, ... }:
 
 {
+  hardware.enableRedistributableFirmware = true;
+
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
