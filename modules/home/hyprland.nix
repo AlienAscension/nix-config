@@ -44,6 +44,8 @@ in
         ", F11, fullscreen,"
       ];
 
+      bindl = lib.optional isLaptop ", switch:Lid Switch, exec, hyprlock";
+
       # Decoration
       decorations = {
         rounding = 10;
@@ -57,20 +59,6 @@ in
       # Animations
       animations.enabled = true;
     };
-
-    extraConfig = ''
-      # Autostart
-      hl.on("hyprland.start", function()
-        hl.exec_cmd("waybar")
-        hl.exec_cmd("hyprpaper")
-        hl.exec_cmd("hypridle")
-      end)
-
-      ${lib.optionalString isLaptop ''
-        # Lid switch: lock screen when lid closes
-        bindl = ", switch:Lid Switch, exec, hyprlock"
-      ''}
-    '';
   };
 
   # Waybar
