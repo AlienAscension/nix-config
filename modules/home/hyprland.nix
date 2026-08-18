@@ -44,13 +44,6 @@ in
         ", F11, fullscreen,"
       ];
 
-      # Autostart
-      exec-once = [
-        "waybar"
-        "hyprpaper"
-        "hypridle"
-      ];
-
       # Decoration
       decorations = {
         rounding = 10;
@@ -65,8 +58,15 @@ in
       animations.enabled = true;
     };
 
-    # Laptop lid switch
     extraConfig = lib.optionalString isLaptop ''
+      # Autostart
+      hl.on("hyprland.start", function()
+        hl.exec_cmd("waybar")
+        hl.exec_cmd("hyprpaper")
+        hl.exec_cmd("hypridle")
+      end)
+
+
       # Lid switch: lock screen when lid closes
       bindl = ", switch:Lid Switch, exec, hyprlock"
     '';
