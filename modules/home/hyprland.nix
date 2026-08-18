@@ -58,7 +58,7 @@ in
       animations.enabled = true;
     };
 
-    extraConfig = lib.optionalString isLaptop ''
+    extraConfig = ''
       # Autostart
       hl.on("hyprland.start", function()
         hl.exec_cmd("waybar")
@@ -66,9 +66,10 @@ in
         hl.exec_cmd("hypridle")
       end)
 
-
-      # Lid switch: lock screen when lid closes
-      bindl = ", switch:Lid Switch, exec, hyprlock"
+      ${lib.optionalString isLaptop ''
+        # Lid switch: lock screen when lid closes
+        bindl = ", switch:Lid Switch, exec, hyprlock"
+      ''}
     '';
   };
 
