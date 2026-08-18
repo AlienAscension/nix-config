@@ -30,7 +30,7 @@ hl.config({
 hl.config({
     input = {
         kb_layout = "us,de",
-        kb_variant = ",T1",
+        kb_variant = ",",
         kb_options = "grp:alt_shift_toggle",
         follow_mouse = 1,
         touchpad = {
