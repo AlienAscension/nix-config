@@ -44,7 +44,7 @@ local mainMod = "SUPER"
 
 -- Launchers
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("ghostty"))
-hl.bind(mainMod .. " + D",      hl.dsp.exec_cmd("wofi --show drun"))
+hl.bind(mainMod .. " + D",      hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 hl.bind(mainMod .. " + E",      hl.dsp.exec_cmd("thunar"))
 hl.bind(mainMod .. " + Y",      hl.dsp.exec_cmd("ghostty -e yazi"))
 
