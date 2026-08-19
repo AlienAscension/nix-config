@@ -8,7 +8,9 @@ This guide walks through a fresh NixOS install on any physical machine using thi
 - btrfs with subvolumes (`@`, `@home`, `@nix`, `@persist`) + zstd compression
 - Snapper hourly snapshots
 - zram swap
-- Hyprland (via the Hyprland flake)
+- Hyprland (via the Hyprland flake) as the compositor
+- Noctalia desktop shell (bar, dock, launcher, notifications, lock screen, wallpaper, idle) — replaces waybar/hyprlock/hypridle/hyprpaper/wofi
+- Noctalia Greeter (greetd) as the display manager — replaces SDDM
 - Home Manager for the `linus` user
 - agenix secrets scaffolding
 
@@ -130,6 +132,8 @@ nixos-install --flake .#geekom
 
 (Substitute `.#desktop`, `.#laptop`, etc. for other machines.)
 
+> **Build time note:** the noctalia shell downloads from the configured cachix (fast), but **noctalia-greeter compiles from source** on first install (~10–30 min) — it has no binary cache. Subsequent builds are cached locally.
+
 When prompted, set the root password. Then reboot:
 
 ```sh
@@ -138,19 +142,38 @@ reboot
 
 ## 10. First login
 
-Log in as `linus` (no password is set yet — use `sudo passwd linus` from a TTY, or set one before rebooting). The Hyprland session starts on login.
+First boot shows the **Noctalia Greeter** (greetd) login screen — not SDDM. It lists users and a session picker that defaults to **Hyprland**.
+
+`linus` has no password set by default, and the greeter requires one for graphical login. To set it:
+
+1. At the greeter, press `Ctrl+Alt+F2` to switch to a TTY.
+2. Log in as `root` (password set during `nixos-install`).
+3. Set linus's password: `passwd linus`.
+4. Switch back to the greeter with `Ctrl+Alt+F1` (or `F7`).
+5. Select `linus`, enter the new password, and log in — the Hyprland session with the Noctalia shell starts.
+
+(Alternatively, set `users.users.linus.initialPassword` in the config before install — but don't commit a real password to the repo.)
 
 ## 11. Post-install
 
 ### SSH host key (for agenix)
 
-agenix encrypts secrets to each host's SSH key. Add this machine's key so it can decrypt its secrets:
+agenix encrypts secrets to each host's SSH key. Add this machine's key so it can decrypt its secrets.
+
+On the new machine, read its host public key:
 
 ```sh
 cat /etc/ssh/ssh_host_ed25519_key.pub
 ```
 
-On another machine that has the repo, add that key to `secrets/secrets.nix` as `geekom_host_key` (or the matching name), add it to the `publicKeys` list of each secret this host should decrypt, commit, and push. Back on the new machine:
+Then, **on a machine that already has access to the secrets** (e.g. your laptop), do the rekey — rekeying must happen where the existing `.age` can already be decrypted:
+
+1. Edit `secrets/secrets.nix` and replace the matching placeholder (`geekom_host_key`, etc.) with the real key you just read.
+2. If any other host keys in the `publicKeys` list are still unfilled placeholders (`AAAA...replace...`), **comment them out** — agenix rekeys to every key in the list and will error on invalid placeholder strings.
+3. Rekey: `agenix -r` (re-encrypts all `.age` files to the updated `publicKeys`).
+4. Commit and push.
+
+Back on the new machine:
 
 ```sh
 cd /etc/nixos
@@ -160,18 +183,22 @@ nh os switch .
 
 ### agenix secrets
 
-If you have existing `.age` secrets this host should receive:
+Install the agenix CLI (on whichever machine you rekey from):
 
 ```sh
 nix profile install github:ryantm/agenix
-agenix -e secrets/linus-ssh-private-key.age   # re-encrypt with the new host key added
 ```
 
-Then uncomment the `age.secrets` block in `machines/geekom/secrets.nix` and rebuild:
+- **To add this host to an existing secret:** rekey on a machine that already has access (see "SSH host key" above): `agenix -r`. This re-encrypts the `.age` to include the new host key.
+- **To create a new secret:** `agenix -e secrets/<name>.age` opens an editor — paste the plaintext, save, and agenix encrypts it to every key in `publicKeys`. (Run this on a machine whose key is already in `publicKeys`.)
+
+Then uncomment the `age.identityPaths` and `age.secrets` block in `machines/<host>/secrets.nix` and rebuild:
 
 ```sh
 nh os switch .
 ```
+
+After switch, the decrypted secret lands at `/run/agenix/<name>` (owned by the user you specified, mode 0400).
 
 ### p10k
 
@@ -200,3 +227,5 @@ nh os switch .   # rebuild + switch (persists across reboots)
 nh os test .     # rebuild + test (doesn't persist across reboot)
 nh os build .    # build only
 ```
+
+`nh` auto-detects the hostname to pick the right flake output. To be explicit (e.g. on a machine whose hostname doesn't match), use `nh os switch .#geekom`.
