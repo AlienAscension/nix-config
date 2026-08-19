@@ -124,11 +124,28 @@
     config.common.default = "*";
   };
 
-  # Display manager (SDDM, for Hyprland session)
-  services.displayManager.sddm = {
+  # Display manager — noctalia-greeter (greetd). Replaces SDDM.
+  # The module enables greetd and sets the session command automatically;
+  # it also enables accounts-daemon for user avatars on the login screen.
+  imports = [ inputs.noctalia-greeter.nixosModules.default ];
+
+  programs.noctalia-greeter = {
     enable = true;
-    wayland.enable = true;
+    settings = {
+      cursor = {
+        theme = "Bibata-Modern-Ice";
+        size = 24;
+        path = "${pkgs.bibata-cursors}/share/icons";
+      };
+      keyboard = {
+        layout = "us";
+        variant = "altgr-intl";
+      };
+    };
   };
+
+  # UPower — required by noctalia's battery widget.
+  services.upower.enable = true;
 
   # Zsh as default shell for all users
   programs.zsh.enable = true;
