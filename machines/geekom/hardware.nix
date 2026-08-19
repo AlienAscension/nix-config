@@ -4,7 +4,7 @@
   # This is a placeholder; replace with actual UUIDs.
   boot.initrd.luks.devices = {
     "cryptroot" = {
-      device = "/dev/disk/by-uuid/REPLACE-WITH-ENCRYPTED-PARTITION-UUID";
+      device = "/dev/disk/by-uuid/c7326fca-74e2-451e-8310-51f4462aa41b";
       allowDiscards = true;
     };
   };
@@ -33,7 +33,7 @@
       options = [ "subvol=@persist" "compress=zstd" "noatime" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/REPLACE-WITH-BOOT-PARTITION-UUID";
+      device = "/dev/disk/by-uuid/6E74-7A53";
       fsType = "vfat";
     };
   };
