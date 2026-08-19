@@ -18,6 +18,19 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Noctalia desktop shell — pinned to the `cachix` branch (latest CI-cached commit).
+    # NOTE: deliberately NO `inputs.nixpkgs.follows` here — following nixpkgs changes the
+    # derivation hash and disables the noctalia binary cache. See modules/system/default.nix.
+    noctalia = {
+      url = "github:noctalia-dev/noctalia/cachix";
+    };
+
+    # Noctalia Greeter (greetd greeter) — no documented binary cache, so follows nixpkgs.
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ { nixpkgs, home-manager, hyprland, agenix, ... }:
