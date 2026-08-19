@@ -8,6 +8,7 @@
     ../../modules/home/dev.nix
     ../../modules/home/apps.nix
     ../../modules/home/hyprland.nix
+    ../../modules/home/noctalia.nix
   ];
 
   home.username = "linus";

@@ -14,6 +14,7 @@ let
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+      home-manager.sharedModules = [ inputs.noctalia.homeModules.default ];
     }
   ];
 in
