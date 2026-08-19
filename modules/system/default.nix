@@ -141,6 +141,7 @@
         layout = "us";
         variant = "altgr-intl";
       };
+      session.default = "hyprland";
     };
   };
 

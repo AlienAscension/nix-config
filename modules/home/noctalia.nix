@@ -18,6 +18,7 @@
 
       wallpaper = {
         enabled = true;
+        fill_color = "#1e1e2e";
         default.path = "/home/linus/Pictures/wallpaper.jpg";
       };
     };
