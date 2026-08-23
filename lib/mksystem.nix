@@ -12,6 +12,10 @@ let
     inputs.agenix.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     {
+      environment.systemPackages = [
+        inputs.agenix.packages.${system}.default
+      ];
+      
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.sharedModules = [ inputs.noctalia.homeModules.default ];
