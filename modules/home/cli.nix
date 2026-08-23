@@ -76,9 +76,14 @@
 
   programs.git = {
     enable = true;
-    userName = "AlienAscension";
-    userEmail = "148532831+AlienAscension@users.noreply.github.com";
+    
+    settings = {
+    user = {
+      name = "AlienAscension";
+      email = "148532831+AlienAscension@users.noreply.github.com";
+    };
   };
+};
 
   programs.delta = {
     enable = true;
