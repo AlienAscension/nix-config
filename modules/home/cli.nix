@@ -54,6 +54,9 @@
     };
 
     initContent = ''
+      # Passage
+      export PASSAGE_DIR="$HOME/git/passage"
+
       # kubecolor: wrap kubectl with colored output
       alias kubectl=kubecolor
       compdef kubecolor=kubectl
@@ -168,6 +171,5 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
-    PASSAGE_DIR = "/home/linus/git/passage";
   };
 }
