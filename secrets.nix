@@ -16,13 +16,13 @@ let
     "ssh-ed25519 AAAA...replace...with...vm-aarch64...pubkey";
 in
 {
-  "./secrets/ssh-personal-git.age".publicKeys = [
+  "secrets/ssh-personal-git.age".publicKeys = [
     desktop_host_key
     laptop_host_key
     geekom_host_key
   ];
 
-  "./secrets/ssh-personal-homelab.age".publicKeys = [
+  "secrets/ssh-personal-homelab.age".publicKeys = [
     desktop_host_key
     laptop_host_key
     geekom_host_key
