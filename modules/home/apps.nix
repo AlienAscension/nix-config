@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    librewolf
+    firefox
     signal-desktop
     keepassxc
     spotify
