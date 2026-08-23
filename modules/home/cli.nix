@@ -152,6 +152,7 @@
     bat
     git-filter-repo
     gh
+    passage
     tree
     duf
     tldr
@@ -167,5 +168,6 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+    PASSAGE_DIR = "/home/linus/git/passage";
   };
 }
