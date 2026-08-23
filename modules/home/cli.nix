@@ -76,6 +76,8 @@
 
   programs.git = {
     enable = true;
+    userName = "AlienAscension";
+    userEmail = "148532831+AlienAscension@users.noreply.github.com";
   };
 
   programs.delta = {
