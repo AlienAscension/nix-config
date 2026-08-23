@@ -17,13 +17,13 @@ let
 in
 {
   "secrets/ssh-personal-git.age".publicKeys = [
-    desktop_host_key
+    # desktop_host_key
     laptop_host_key
     geekom_host_key
   ];
 
   "secrets/ssh-personal-homelab.age".publicKeys = [
-    desktop_host_key
+    # desktop_host_key
     laptop_host_key
     geekom_host_key
   ];
