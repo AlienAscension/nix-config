@@ -1,24 +1,46 @@
 let
-  # Host SSH public keys — fill these in after first boot of each machine.
-  # Read with: cat /etc/ssh/ssh_host_ed25519_key.pub
-  desktop_host_key = "ssh-ed25519 AAAA...replace...with...desktop...pubkey";
-  laptop_host_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJAfe+S87+IdXbubNe1q4EXmYpoeh49XiTM1KN1Zmiln";
-  geekom_host_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqe5eQYE9f2Bm/W2nXbF6ymjqhlMv9Ibh19q+JJgiar";
-  vm_aarch64_host_key = "ssh-ed25519 AAAA...replace...with...vm-aarch64...pubkey";
+  # Machine SSH host keys.
+  # These are agenix recipients: machines whose host key can decrypt
+  # the corresponding secret.
 
+  desktop_host_key =
+    "ssh-ed25519 AAAA...replace...with...desktop...pubkey";
+
+  laptop_host_key =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJAfe+S87+IdXbubNe1q4EXmYpoeh49XiTM1KN1Zmiln";
+
+  geekom_host_key =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqe5eQYE9f2Bm/W2nXbF6ymjqhlMv9Ibh19q+JJgiar";
+
+  vm_aarch64_host_key =
+    "ssh-ed25519 AAAA...replace...with...vm-aarch64...pubkey";
 in
 {
-  "linus-ssh-private-key.age".publicKeys = [
+  # Personal Git credentials:
+  # GitLab, Codeberg, personal Forgejo, etc.
+  "ssh-personal-git.age".publicKeys = [
     desktop_host_key
     laptop_host_key
     geekom_host_key
-    vm_aarch64_host_key
-    linus_user_key
   ];
 
-  # Future, when work laptop arrives:
-  # "work-ssh-private-key.age".publicKeys = [
+  # Personal homelab credentials:
+  # NAS, Raspberry Pi, servers, etc.
+  "ssh-personal-homelab.age".publicKeys = [
+    desktop_host_key
+    laptop_host_key
+    geekom_host_key
+  ];
+
+  # Future work credentials:
+  #
+  # "ssh-work-git.age".publicKeys = [
   #   work_laptop_host_key
-  #   work_user_key
+  #   vm_aarch64_host_key
+  # ];
+  #
+  # "ssh-work-server.age".publicKeys = [
+  #   work_laptop_host_key
+  #   vm_aarch64_host_key
   # ];
 }
