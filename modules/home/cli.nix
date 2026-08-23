@@ -95,49 +95,46 @@
   };
 
   programs.ssh = {
-    enable = true;
+  enable = true;
 
-    matchBlocks = {
-      "github.com" = {
-        user = "git";
-        hostname = "github.com";
-        preferredAuthentications = [ "publickey" ];
-        identityFile = "/run/agenix/ssh-personal-git";
-        identitiesOnly = true;
-      };
+  matchBlocks = {
+    "github.com" = {
+      user = "git";
+      hostname = "github.com";
+      identityFile = "/run/agenix/ssh-personal-git";
+      identitiesOnly = true;
+    };
 
-      "codeberg.org" = {
-        user = "AlienAscension";
-        hostname = "codeberg.org";
-        preferredAuthentications = [ "publickey" ];
-        identityFile = "/run/agenix/ssh-personal-git";
-        identitiesOnly = true;
-      };
+    "codeberg.org" = {
+      user = "AlienAscension";
+      hostname = "codeberg.org";
+      identityFile = "/run/agenix/ssh-personal-git";
+      identitiesOnly = true;
+    };
 
-      "git.lindabre.de" = {
-        user = "git";
-        hostname = "git.lindabre.de";
-        port = 2222;
-        preferredAuthentications = [ "publickey" ];
-        identityFile = "/run/agenix/ssh-personal-git";
-        identitiesOnly = true;
-      };
+    "git.lindabre.de" = {
+      user = "git";
+      hostname = "git.lindabre.de";
+      port = 2222;
+      identityFile = "/run/agenix/ssh-personal-git";
+      identitiesOnly = true;
+    };
 
-      "raspi" = {
-        hostname = "192.168.0.36";
-        user = "admin";
-        identityFile = "/run/agenix/ssh-personal-homelab";
-        identitiesOnly = true;
-      };
+    "raspi" = {
+      hostname = "192.168.0.36";
+      user = "admin";
+      identityFile = "/run/agenix/ssh-personal-homelab";
+      identitiesOnly = true;
+    };
 
-      "nas" = {
-        hostname = "192.168.0.34";
-        user = "admin";
-        identityFile = "/run/agenix/ssh-personal-homelab";
-        identitiesOnly = true;
-      };
+    "nas" = {
+      hostname = "192.168.0.34";
+      user = "admin";
+      identityFile = "/run/agenix/ssh-personal-homelab";
+      identitiesOnly = true;
     };
   };
+};
 
   home.packages = with pkgs; [
     ripgrep
