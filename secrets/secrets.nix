@@ -6,11 +6,6 @@ let
   geekom_host_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqe5eQYE9f2Bm/W2nXbF6ymjqhlMv9Ibh19q+JJgiar";
   vm_aarch64_host_key = "ssh-ed25519 AAAA...replace...with...vm-aarch64...pubkey";
 
-  # User SSH public keys — fill these in after generating keys.
-  linus_user_key = "ssh-ed25519 AAAA...replace...with...linus...pubkey";
-
-  # Future: work_user_key = "ssh-ed25519 AAAA...";
-  # Future: work_laptop_host_key = "ssh-ed25519 AAAA...";
 in
 {
   "linus-ssh-private-key.age".publicKeys = [
