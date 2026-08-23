@@ -95,43 +95,44 @@
   };
 
   programs.ssh = {
-  enable = true;
+    enable = true;
+    enableDefaultConfig = false;
 
-  matchBlocks = {
-    "github.com" = {
-      user = "git";
-      hostname = "github.com";
-      identityFile = "/run/agenix/ssh-personal-git";
-      identitiesOnly = true;
-    };
+    settings = {
+      "github.com" = {
+        User = "git";
+        HostName = "github.com";
+        IdentityFile = "/run/agenix/ssh-personal-git";
+        IdentitiesOnly = true;
+      };
 
-    "codeberg.org" = {
-      user = "AlienAscension";
-      hostname = "codeberg.org";
-      identityFile = "/run/agenix/ssh-personal-git";
-      identitiesOnly = true;
-    };
+      "codeberg.org" = {
+        User = "AlienAscension";
+        HostName = "codeberg.org";
+        IdentityFile = "/run/agenix/ssh-personal-git";
+        IdentitiesOnly = true;
+      };
 
-    "git.lindabre.de" = {
-      user = "git";
-      hostname = "git.lindabre.de";
-      port = 2222;
-      identityFile = "/run/agenix/ssh-personal-git";
-      identitiesOnly = true;
-    };
+      "git.lindabre.de" = {
+        User = "git";
+        HostName = "git.lindabre.de";
+        Port = 2222;
+        IdentityFile = "/run/agenix/ssh-personal-git";
+        IdentitiesOnly = true;
+      };
 
-    "raspi" = {
-      hostname = "192.168.0.36";
-      user = "admin";
-      identityFile = "/run/agenix/ssh-personal-homelab";
-      identitiesOnly = true;
-    };
+      "raspi" = {
+        HostName = "192.168.0.36";
+        User = "admin";
+        IdentityFile = "/run/agenix/ssh-personal-homelab";
+        IdentitiesOnly = true;
+      };
 
-    "nas" = {
-      hostname = "192.168.0.34";
-      user = "admin";
-      identityFile = "/run/agenix/ssh-personal-homelab";
-      identitiesOnly = true;
+      "nas" = {
+        HostName = "192.168.0.34";
+        User = "admin";
+        IdentityFile = "/run/agenix/ssh-personal-homelab";
+        IdentitiesOnly = true;
     };
   };
 };
