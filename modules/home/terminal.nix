@@ -8,6 +8,8 @@
       window-decoration = false;
       mouse-hide-while-typing = true;
       confirm-close-surface = false;
+
+      background-opacity = 0.85;
     };
   };
 }

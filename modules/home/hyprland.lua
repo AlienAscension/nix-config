@@ -17,13 +17,19 @@ hl.config({
         rounding = 10,
         blur = {
             enabled = true,
-            size = 3,
-            passes = 1,
+            size = 5,
+            passes = 2,
         },
     },
     animations = {
         enabled = true,
     },
+})
+
+-- Window rules
+hl.window_rule({
+    match = { class = "com.mitchellh.ghostty" },
+    opacity = "0.90 0.90",
 })
 
 -- Input
