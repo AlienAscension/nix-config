@@ -7,14 +7,11 @@
     keepassxc
     spotify
     libreoffice
+    flameshot
   ];
 
-  programs.flameshot = {
-    enable = true;
-    settings = {
-      General = {
-        useGrimAdapter = true;
-      };
-    };
-  };
+  xdg.configFile."flameshot/flameshot.ini".text = ''
+    [General]
+    useGrimAdapter=true
+  '';
 }
