@@ -7,6 +7,14 @@
     keepassxc
     spotify
     libreoffice
-    flameshot
   ];
+
+  programs.flameshot = {
+    enable = true;
+    settings = {
+      General = {
+        useGrimAdapter = true;
+      };
+    };
+  };
 }

@@ -15,6 +15,13 @@
   home.homeDirectory = "/home/linus";
   home.stateVersion = "26.05";
 
+  home.sessionVariables = {
+    HYPRCURSOR_THEME = "rose-pine-hyprcursor";
+    HYPRCURSOR_SIZE = 30;
+    XCURSOR_THEME = "rose-pine-hyprcursor";
+    XCURSOR_SIZE = 30;
+  };
+
   programs.git = {
     enable = true;
     settings.user.name = "AlienAscension";
