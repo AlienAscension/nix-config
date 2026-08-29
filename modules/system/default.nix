@@ -49,7 +49,7 @@
   # Users
   users.users.linus = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "video" "network" "podman" ];
+    extraGroups = [ "wheel" "audio" "video" "network" "podman" "storage" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLlTpfzeRXhIiduiVO9xytIttfkFgSIc+A5y75neUyd"
@@ -148,6 +148,9 @@
 
   # UPower — required by noctalia's battery widget.
   services.upower.enable = true;
+
+  # USB auto-mounting (udisks2)
+  services.udisks2.enable = true;
 
   # Zsh as default shell for all users
   programs.zsh.enable = true;

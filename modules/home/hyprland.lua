@@ -35,7 +35,7 @@ hl.window_rule({
 -- Input
 hl.config({
     input = {
-        kb_layout = "us,de",
+        kb_layout = "eu,de",
         kb_variant = ",",
         kb_options = "grp:alt_shift_toggle",
         follow_mouse = 1,
@@ -52,6 +52,7 @@ local mainMod = "SUPER"
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("ghostty"))
 hl.bind(mainMod .. " + D",      hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 hl.bind(mainMod .. " + E",      hl.dsp.exec_cmd("thunar"))
+hl.bind(mainMod .. " + ALT + l", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + Y",      hl.dsp.exec_cmd("ghostty -e yazi"))
 
 -- Window management
