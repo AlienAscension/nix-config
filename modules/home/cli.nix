@@ -167,6 +167,7 @@
     yazi
     thunar
     udiskie
+    gnupg
   ];
 
   services.udiskie = {
