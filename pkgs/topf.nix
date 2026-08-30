@@ -1,13 +1,13 @@
 { lib, buildGoModule, fetchFromGitHub }:
 
-buildGoModule rec {
+buildGoModule (finalAttrs: {
   pname = "topf";
   version = "0.5.0";
 
   src = fetchFromGitHub {
     owner = "postfinance";
     repo = "topf";
-    rev = "v${version}";
+    rev = "v${finalAttrs.version}";
     hash = "sha256-q9Gr1UuFOxptui6ZOhE0qTMXXVAkLjkAX0n9rzlpaOU=";
   };
 
@@ -15,10 +15,11 @@ buildGoModule rec {
 
   subPackages = [ "cmd/topf" ];
 
-  meta = with lib; {
-    description = "Talos Orchestrator by PostFinance";
-    homepage = "https://github.com/postfinance/topf";
-    license = licenses.mit;
-    mainProgram = "topf";
-  };
+  meta = {
+  description = "Talos Orchestrator by PostFinance";
+  homepage = "https://github.com/postfinance/topf";
+  license = lib.licenses.mit;
+  mainProgram = "topf";
+  maintainers = with lib.maintainers; [ yourHandle ];
+};
 }
