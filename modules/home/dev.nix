@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     # Kubernetes tooling
     kubectl
+    krew
     kubernetes-helm
     kustomize
     k9s
