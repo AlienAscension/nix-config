@@ -16,10 +16,10 @@ buildGoModule (finalAttrs: {
   subPackages = [ "cmd/topf" ];
 
   meta = {
-  description = "Talos Orchestrator by PostFinance";
-  homepage = "https://github.com/postfinance/topf";
-  license = lib.licenses.mit;
-  mainProgram = "topf";
-  maintainers = with lib.maintainers; [ AlienAscension ];
-};
-}
+    description = "Talos Orchestrator by PostFinance";
+    homepage = "https://github.com/postfinance/topf";
+    license = lib.licenses.mit;
+    mainProgram = "topf";
+    maintainers = with lib.maintainers; [ AlienAscension ];
+  };
+})
