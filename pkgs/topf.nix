@@ -20,6 +20,6 @@ buildGoModule (finalAttrs: {
   homepage = "https://github.com/postfinance/topf";
   license = lib.licenses.mit;
   mainProgram = "topf";
-  maintainers = with lib.maintainers; [ yourHandle ];
+  maintainers = with lib.maintainers; [ AlienAscension ];
 };
 }
