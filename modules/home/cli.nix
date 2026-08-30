@@ -166,7 +166,14 @@
     lsd
     yazi
     thunar
+    udiskie
   ];
+
+  services.udiskie = {
+    enable = true;
+    automount = true;
+    notify = true;
+  };
 
   home.sessionVariables = {
     EDITOR = "nvim";
