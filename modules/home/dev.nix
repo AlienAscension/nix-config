@@ -17,6 +17,7 @@
     hubble
     krew
     zed-editor
+    opencode
 
     # Development
     go
