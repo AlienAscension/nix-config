@@ -8,6 +8,7 @@
     spotify
     libreoffice
     flameshot
+    steam
   ];
 
   xdg.configFile."flameshot/flameshot.ini".text = ''
