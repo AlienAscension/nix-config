@@ -16,6 +16,7 @@
     cilium-cli
     hubble
     krew
+    zed-editor
 
     # Development
     go
