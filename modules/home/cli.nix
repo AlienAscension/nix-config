@@ -54,8 +54,8 @@
     };
 
     initContent = ''
-      # Passage
-      export PASSAGE_DIR="$HOME/git/passage"
+      # pass
+      export PASSWORD_STORE_DIR="$HOME/git/pass"
 
       # kubecolor: wrap kubectl with colored output
       alias kubectl=kubecolor
@@ -101,6 +101,18 @@
     extraConfig = ''
       set -g default-terminal "xterm-256color"
       set -ag terminal-overrides ",xterm-256color:RGB"
+    '';
+  };
+
+  programs.gpg.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    pinentry.package = pkgs.pinentry-qt;
+    enableZshIntegration = true;
+    extraConfig = ''
+      default-cache-ttl 3600
+      max-cache-ttl 86400
     '';
   };
 
@@ -155,7 +167,7 @@
     bat
     git-filter-repo
     gh
-    passage
+    pass
     tree
     duf
     tldr
@@ -167,7 +179,6 @@
     yazi
     thunar
     udiskie
-    gnupg
   ];
 
   services.udiskie = {
