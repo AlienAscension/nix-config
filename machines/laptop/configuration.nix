@@ -17,6 +17,11 @@
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   };
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+  };
+
   # Home Manager
   home-manager.users.linus = import ../../users/linus/home.nix;
 

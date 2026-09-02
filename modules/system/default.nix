@@ -4,6 +4,13 @@
   # Allow unfree packages (e.g. discord)
   nixpkgs.config.allowUnfree = true;
 
+  # Cherry-pick newer packages from nixpkgs-unstable (see flake.nix inputs)
+  nixpkgs.overlays = [
+    (final: prev: {
+      opencode = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.opencode;
+    })
+  ];
+
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
