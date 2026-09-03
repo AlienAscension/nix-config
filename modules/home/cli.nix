@@ -14,6 +14,7 @@
         "kubectl"
         "fluxcd"
       ];
+      custom = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k";
       theme = "powerlevel10k";
     };
 
@@ -52,6 +53,21 @@
       v = "nvim";
       zshrc = "nvim ~/.zshrc";
     };
+
+    initExtraFirst = ''
+      # Invalidate zcompdumps when the set of zsh completion files changes.
+      # compinit reuses its dump whenever only the *number* of completion
+      # files matches, so a 1-for-1 package swap (passage -> pass) silently
+      # keeps the stale dump and the new package's completions never load.
+      _zcomp_stamp="$HOME/.cache/zsh/.completions-fingerprint"
+      mkdir -p "$_zcomp_stamp:h"
+      _zcomp_fp="$({ for p in ''${(z)NIX_PROFILES}; do ls -1 "$p/share/zsh/site-functions" 2>/dev/null; done; } | sort | md5sum | cut -d' ' -f1)"
+      if [[ ! -f "$_zcomp_stamp" || "$(<$_zcomp_stamp)" != "$_zcomp_fp" ]]; then
+        rm -f "$HOME"/.zcompdump*(N) "$HOME"/.cache/oh-my-zsh/completions/.zcompdump*(N)
+      fi
+      print -r -- "$_zcomp_fp" >| "$_zcomp_stamp"
+      unset _zcomp_stamp _zcomp_fp
+    '';
 
     initContent = ''
       # pass
