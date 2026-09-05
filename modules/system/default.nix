@@ -56,7 +56,7 @@
   # Users
   users.users.linus = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "video" "network" "networkmanager" "podman" "storage ];
+    extraGroups = [ "wheel" "audio" "video" "network" "networkmanager" "podman" "storage" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLlTpfzeRXhIiduiVO9xytIttfkFgSIc+A5y75neUyd"
