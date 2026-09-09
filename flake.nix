@@ -40,6 +40,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.hyprlang.follows = "hyprland/hyprlang";
     };
+
+    # Kubernetes TUI. Pinned to a release tag, and deliberately NO
+    # `inputs.nixpkgs.follows`: upstream warms its `nkl-sofka` Cachix cache for
+    # the tagged rev using its own nixpkgs rev, so following ours would change
+    # every dependency hash and miss that cache. See modules/system/default.nix.
+    sofka = {
+      url = "github:nklmilojevic/sofka/v0.25.3";
+    };
   };
 
   outputs = inputs @ { nixpkgs, home-manager, hyprland, agenix, ... }:

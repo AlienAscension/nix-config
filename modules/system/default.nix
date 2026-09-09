@@ -106,6 +106,7 @@
     nh
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
     (callPackage ../../pkgs/topf.nix {})
+    inputs.sofka.packages.${pkgs.system}.default
   ];
 
   # Podman

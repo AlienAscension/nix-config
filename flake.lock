@@ -525,6 +525,22 @@
         "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1788807765,
+        "narHash": "sha256-J9oC0bKnkXUrMegqRTXVkyDFJ0gn2U/Qpoo9HgGMQmA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "93108a538f079596c9a16c72cf03e9322782b6dd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "noctalia": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -596,7 +612,8 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "noctalia": "noctalia",
         "noctalia-greeter": "noctalia-greeter",
-        "rose-pine-hyprcursor": "rose-pine-hyprcursor"
+        "rose-pine-hyprcursor": "rose-pine-hyprcursor",
+        "sofka": "sofka"
       }
     },
     "rose-pine-hyprcursor": {
@@ -621,6 +638,25 @@
       "original": {
         "owner": "ndom91",
         "repo": "rose-pine-hyprcursor",
+        "type": "github"
+      }
+    },
+    "sofka": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1788962960,
+        "narHash": "sha256-e/+cdD8B+yE4tQzk73LdUbAX9ULKn4XJyoBUYb3fVOs=",
+        "owner": "nklmilojevic",
+        "repo": "sofka",
+        "rev": "d4db1e7f6e3ddcfeeb26f47a9f59ab2f33ee042e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nklmilojevic",
+        "ref": "v0.25.3",
+        "repo": "sofka",
         "type": "github"
       }
     },
