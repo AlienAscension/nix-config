@@ -159,6 +159,13 @@
         IdentitiesOnly = true;
       };
 
+      "cloud.lindabre.de" = {
+        User = "root";
+        HostName = "cloud.lindabre.de";
+        IdentityFile = "/run/agenix/ssh-personal-homelab";
+        IdentitiesOnly = true;
+      };
+
       "raspi" = {
         HostName = "192.168.0.36";
         User = "admin";
@@ -183,6 +190,7 @@
     bat
     git-filter-repo
     gh
+    pangolin-cli
     pass
     tree
     duf
