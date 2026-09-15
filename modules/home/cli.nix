@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.zsh = {
@@ -54,38 +54,40 @@
       zshrc = "nvim ~/.zshrc";
     };
 
-    initExtraFirst = ''
-      # Invalidate zcompdumps when the set of zsh completion files changes.
-      # compinit reuses its dump whenever only the *number* of completion
-      # files matches, so a 1-for-1 package swap (passage -> pass) silently
-      # keeps the stale dump and the new package's completions never load.
-      _zcomp_stamp="$HOME/.cache/zsh/.completions-fingerprint"
-      mkdir -p "$_zcomp_stamp:h"
-      _zcomp_fp="$({ for p in ''${(z)NIX_PROFILES}; do ls -1 "$p/share/zsh/site-functions" 2>/dev/null; done; } | sort | md5sum | cut -d' ' -f1)"
-      if [[ ! -f "$_zcomp_stamp" || "$(<$_zcomp_stamp)" != "$_zcomp_fp" ]]; then
-        rm -f "$HOME"/.zcompdump*(N) "$HOME"/.cache/oh-my-zsh/completions/.zcompdump*(N)
-      fi
-      print -r -- "$_zcomp_fp" >| "$_zcomp_stamp"
-      unset _zcomp_stamp _zcomp_fp
-    '';
+    initContent = lib.mkMerge [
+      (lib.mkBefore ''
+        # Invalidate zcompdumps when the set of zsh completion files changes.
+        # compinit reuses its dump whenever only the *number* of completion
+        # files matches, so a 1-for-1 package swap (passage -> pass) silently
+        # keeps the stale dump and the new package's completions never load.
+        _zcomp_stamp="$HOME/.cache/zsh/.completions-fingerprint"
+        mkdir -p "$_zcomp_stamp:h"
+        _zcomp_fp="$({ for p in ''${(z)NIX_PROFILES}; do ls -1 "$p/share/zsh/site-functions" 2>/dev/null; done; } | sort | md5sum | cut -d' ' -f1)"
+        if [[ ! -f "$_zcomp_stamp" || "$(<$_zcomp_stamp)" != "$_zcomp_fp" ]]; then
+          rm -f "$HOME"/.zcompdump*(N) "$HOME"/.cache/oh-my-zsh/completions/.zcompdump*(N)
+        fi
+        print -r -- "$_zcomp_fp" >| "$_zcomp_stamp"
+        unset _zcomp_stamp _zcomp_fp
+      '')
 
-    initContent = ''
-      # pass
-      export PASSWORD_STORE_DIR="$HOME/git/pass"
+      ''
+        # pass
+        export PASSWORD_STORE_DIR="$HOME/git/pass"
 
-      # kubecolor: wrap kubectl with colored output
-      alias kubectl=kubecolor
-      compdef kubecolor=kubectl
+        # kubecolor: wrap kubectl with colored output
+        alias kubectl=kubecolor
+        compdef kubecolor=kubectl
 
-      # atuin
-      eval "$(atuin init zsh)"
+        # atuin
+        eval "$(atuin init zsh)"
 
-      # krew
-      export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+        # krew
+        export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-      # Go
-      export PATH="$HOME/.local/go/bin:$HOME/go/bin:$PATH"
-    '';
+        # Go
+        export PATH="$HOME/.local/go/bin:$HOME/go/bin:$PATH"
+      ''
+    ];
   };
 
   programs.atuin = {

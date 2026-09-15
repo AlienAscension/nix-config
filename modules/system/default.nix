@@ -7,7 +7,7 @@
   # Cherry-pick newer packages from nixpkgs-unstable (see flake.nix inputs)
   nixpkgs.overlays = [
     (final: prev: {
-      opencode = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.opencode;
+      opencode = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
     })
   ];
 
@@ -104,9 +104,9 @@
     usbutils
     pciutils
     nh
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
     (callPackage ../../pkgs/topf.nix {})
-    inputs.sofka.packages.${pkgs.system}.default
+    inputs.sofka.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Podman
