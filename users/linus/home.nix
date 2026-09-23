@@ -27,9 +27,4 @@
     settings.user.name = "AlienAscension";
     # Email is set manually after install (private): git config --global user.email <email>
   };
-
-  # p10k prompt config — regenerate with `p10k configure` and copy the
-  # result here (the wizard writes to a temp dir when ~/.p10k.zsh is
-  # HM-managed)
-  home.file.".p10k.zsh".source = ./p10k.zsh;
 }

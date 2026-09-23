@@ -1,6 +1,11 @@
 { pkgs, lib, ... }:
 
 {
+  # p10k prompt config — regenerate with `p10k configure` and copy the
+  # result here (the wizard writes to a temp dir when ~/.p10k.zsh is
+  # HM-managed). Shared across all users/devices.
+  home.file.".p10k.zsh".source = ./p10k.zsh;
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -68,6 +73,12 @@
         fi
         print -r -- "$_zcomp_fp" >| "$_zcomp_stamp"
         unset _zcomp_stamp _zcomp_fp
+
+        # Load the p10k config early (needed for instant prompt). The
+        # oh-my-zsh theme alone does not source it, which otherwise makes
+        # p10k fall back to defaults and launch the configure wizard in
+        # subshells (e.g. kubie ctx).
+        [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       '')
 
       ''
