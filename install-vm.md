@@ -171,9 +171,17 @@ services.xserver = {
 
 Then `nh os switch .` again.
 
-## 12. (Optional) Shared host folder
+## 12. Shared Downloads folder
 
-To mount your macOS home directory inside the VM via VMware hgfs, uncomment the `/host` `fileSystems` block in `machines/vm-aarch64/hardware.nix` and rebuild. This requires VMware guest tools to be working (they're enabled by default in this config).
+The VM mounts the Mac's `~/Downloads` at its own `~/Downloads`, so anything you download on the Mac is immediately available in the VM (and vice versa). This uses VMware hgfs and requires VMware guest tools, which are enabled by default in this config.
+
+On the **Mac**, in the VM's settings:
+
+1. Open **Settings → Sharing**.
+2. Enable **Share folders** (do *not* enable Mirrored Folders).
+3. Add a shared folder named exactly **`Downloads`** pointing at your Mac's `~/Downloads`.
+
+The mount is declared in `machines/vm-aarch64/hardware.nix` as `/home/linus/Downloads` (device `.host:/Downloads`). It uses `nofail` and `x-systemd.automount`, so a missing share won't block boot and the mount happens on first access. Apply with `nh os switch .` — no edits needed.
 
 ## Rebuilding later
 

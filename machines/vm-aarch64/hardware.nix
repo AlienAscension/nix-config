@@ -23,18 +23,24 @@
 
   swapDevices = [ ];
 
-  # Optional: mount the macOS host home directory via VMware hgfs.
-  # Uncomment after confirming vmware-guest tools are working.
-  # fileSystems."/host" = {
-  #   fsType = "fuse./run/current-system/sw/bin/vmhgfs-fuse";
-  #   device = ".host:/";
-  #   options = [
-  #     "umask=22"
-  #     "uid=1000"
-  #     "gid=1000"
-  #     "allow_other"
-  #     "auto_unmount"
-  #     "defaults"
-  #   ];
-  # };
+  # Mount the macOS host ~/Downloads via VMware hgfs at the guest's
+  # ~/Downloads. Requires a shared folder named "Downloads" in the VM's
+  # Fusion settings (Settings -> Sharing). uid is linus (1000); gid is the
+  # "users" group (100).
+  #
+  # nofail + x-systemd.automount: don't block boot if the share isn't
+  # configured, and mount on first access.
+  fileSystems."/home/linus/Downloads" = {
+    device = ".host:/Downloads";
+    fsType = "fuse./run/current-system/sw/bin/vmhgfs-fuse";
+    options = [
+      "umask=22"
+      "uid=1000"
+      "gid=100"
+      "allow_other"
+      "auto_unmount"
+      "nofail"
+      "x-systemd.automount"
+    ];
+  };
 }
