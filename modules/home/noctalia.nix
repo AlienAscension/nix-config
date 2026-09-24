@@ -21,6 +21,10 @@
         fill_color = "#1e1e2e";
         default.path = "/home/linus/Pictures/wallpaper.jpg";
       };
+
+      brightness = {
+        enable_ddcutil = true;
+      };
     };
   };
 }

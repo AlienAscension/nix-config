@@ -28,5 +28,8 @@
   # Intel CPU microcode
   hardware.cpu.intel.updateMicrocode = true;
 
+  # i2c access for ddcutil (external monitor brightness via DDC/CI)
+  hardware.i2c.enable = true;
+
   system.stateVersion = "26.05";
 }
