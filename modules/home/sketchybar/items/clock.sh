@@ -5,4 +5,4 @@ sketchybar --add item clock right \
                        label.color=$LABEL_COLOR \
                        icon.drawing=off \
                        update_freq=10 \
-                       script="date '+%a %d %b  %H:%M'"
+                       script="$PLUGIN_DIR/clock.sh"

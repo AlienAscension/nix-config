@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
-# SF Symbols
+# Icons
+APPLE=
 
-APPLE=􀣺
+# SF Symbol glyphs (Apple menu popup)
 PREFERENCES=􀺽
 ACTIVITY=􀒓
 LOCK=􀒳
