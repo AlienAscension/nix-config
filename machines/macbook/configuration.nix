@@ -36,6 +36,16 @@
       # Terminal used by the AeroSpace launcher binds (ghostty is not in the
       # pinned nixpkgs for aarch64-darwin, so install via Homebrew).
       "ghostty"
+
+      # EurKEY keyboard layout for macOS. `eurkey-next` is the maintained
+      # fork; the old `eurkey` cask is deprecated upstream. A reboot is
+      # required for the layout to appear in System Settings.
+      "eurkey-next"
+
+      # Key remapper. macOS cannot bind a bare-modifier shortcut (Option+Shift)
+      # to input-source switching, so Karabiner emits it instead. See the
+      # complex modification in modules/home/darwin.nix.
+      "karabiner-elements"
     ];
   };
 
