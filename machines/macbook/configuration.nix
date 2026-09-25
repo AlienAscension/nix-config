@@ -12,12 +12,21 @@
 
   system.primaryUser = "lbr";
 
-  nix.settings.experimental-features = "nix-command flakes";
+  # This Mac runs Determinate Nix, which manages the Nix installation, the
+  # nix-daemon, and /etc/nix/nix.conf itself. nix-darwin must not manage them
+  # too, or activation aborts with "Determinate detected, aborting activation".
+  # Flakes are already enabled by Determinate, so no nix.settings are needed.
+  nix.enable = false;
 
-  # Homebrew management via nix-homebrew
+  # Homebrew management via nix-homebrew.
+  # autoMigrate lets nix-homebrew take over the pre-existing /opt/homebrew
+  # installation (it deletes the old Homebrew checkout and re-creates it under
+  # nix management). Without it, activation aborts with
+  # "An existing /opt/homebrew/Library/Homebrew is in the way".
   nix-homebrew = {
     enable = true;
     user = "lbr";
+    autoMigrate = true;
   };
 
   homebrew = {
@@ -36,6 +45,10 @@
 
   # Home Manager
   home-manager.users.lbr = import ../../users/lbr/home-darwin.nix;
+
+  # Move pre-existing dotfiles aside (e.g. a hand-written ~/.ssh/config)
+  # instead of aborting activation with "Existing file ... would be clobbered".
+  home-manager.backupFileExtension = "backup";
 
   system.stateVersion = 6;
 }
