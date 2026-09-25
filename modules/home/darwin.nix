@@ -37,7 +37,6 @@ in
       default-root-container-orientation = "auto";
       on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
       automatically-unhide-macos-hidden-apps = false;
-      auto-reload-config = true;
 
       # Leave room for the top SketchyBar (height 36 + padding).
       gaps = {
