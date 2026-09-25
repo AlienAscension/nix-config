@@ -42,6 +42,9 @@
     })
   ];
 
+  # Auto-hide the native menu bar — the top bar is SketchyBar now.
+  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+
   # Keyboard
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
