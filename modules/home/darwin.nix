@@ -130,7 +130,12 @@ in
   #
   # Karabiner's own config is managed here so the rule is always active; don't
   # edit it from the Karabiner GUI or home-manager will revert it on next switch.
-  xdg.configFile."karabiner/karabiner.json".text = builtins.toJSON {
+  xdg.configFile."karabiner/karabiner.json" = {
+    # `force` because Karabiner rewrites its config as a regular file on launch;
+    # without it home-manager tries to back the file up on every switch and
+    # fails once a .backup already exists.
+    force = true;
+    text = builtins.toJSON {
     profiles = [
       {
         name = "Default profile";
@@ -166,6 +171,7 @@ in
         ];
       }
     ];
+    };
   };
 
   # Also enable the native Control+Space toggle as a manual fallback. It ships
