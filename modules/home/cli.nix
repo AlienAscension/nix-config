@@ -137,7 +137,6 @@
 
   services.gpg-agent = {
     enable = true;
-    pinentry.package = pkgs.pinentry-qt;
     enableZshIntegration = true;
     extraConfig = ''
       default-cache-ttl 3600
@@ -214,15 +213,7 @@
     p7zip
     lsd
     yazi
-    thunar
-    udiskie
   ];
-
-  services.udiskie = {
-    enable = true;
-    automount = true;
-    notify = true;
-  };
 
   home.sessionVariables = {
     EDITOR = "nvim";

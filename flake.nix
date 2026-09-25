@@ -22,6 +22,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-homebrew = {
+      url = "github:zhaofengli/nix-homebrew";
+    };
+
     # Noctalia desktop shell — pinned to the `cachix` branch (latest CI-cached commit).
     # NOTE: deliberately NO `inputs.nixpkgs.follows` here — following nixpkgs changes the
     # derivation hash and disables the noctalia binary cache. See modules/system/default.nix.
@@ -53,11 +62,14 @@
   outputs = inputs @ { nixpkgs, home-manager, hyprland, agenix, ... }:
     let
       mkSystem = import ./lib/mksystem.nix { inherit nixpkgs inputs; };
+      mkDarwin = import ./lib/mkdarwin.nix { inherit nixpkgs inputs; };
     in
     {
       nixosConfigurations.desktop = mkSystem "desktop" { system = "x86_64-linux"; };
       nixosConfigurations.laptop = mkSystem "laptop" { system = "x86_64-linux"; };
       nixosConfigurations.geekom = mkSystem "geekom" { system = "x86_64-linux"; };
       nixosConfigurations.vm-aarch64 = mkSystem "vm-aarch64" { system = "aarch64-linux"; };
+
+      darwinConfigurations.macbook = mkDarwin "macbook" { system = "aarch64-darwin"; user = "lbr"; };
     };
 }

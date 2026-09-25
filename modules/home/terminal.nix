@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
-{
+lib.mkIf pkgs.stdenv.isLinux {
   programs.ghostty = {
     enable = true;
     settings = {

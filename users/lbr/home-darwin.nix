@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   imports = [
@@ -6,21 +6,12 @@
     ../../modules/home/editor.nix
     ../../modules/home/terminal.nix
     ../../modules/home/dev.nix
-    ../../modules/home/linux-desktop.nix
-    ../../modules/home/hyprland.nix
-    ../../modules/home/noctalia.nix
+    ../../modules/home/darwin.nix
   ];
 
-  home.username = "linus";
-  home.homeDirectory = "/home/linus";
+  home.username = "lbr";
+  home.homeDirectory = "/Users/lbr";
   home.stateVersion = "26.05";
-
-  home.sessionVariables = {
-    HYPRCURSOR_THEME = "rose-pine-hyprcursor";
-    HYPRCURSOR_SIZE = 30;
-    XCURSOR_THEME = "rose-pine-hyprcursor";
-    XCURSOR_SIZE = 30;
-  };
 
   programs.git = {
     enable = true;

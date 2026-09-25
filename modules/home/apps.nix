@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -6,11 +6,13 @@
     firefox
     signal-desktop
     keepassxc
-    spotify
     libreoffice
     flameshot
-    steam
     kdePackages.okular
+  ] ++ lib.optionals pkgs.stdenv.isx86_64 [
+    # Spotify and Steam are not packaged for aarch64-linux in this nixpkgs pin.
+    spotify
+    steam
   ];
 
   xdg.mimeApps = {

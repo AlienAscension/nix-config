@@ -6,7 +6,7 @@
     ../../modules/home/editor.nix
     ../../modules/home/terminal.nix
     ../../modules/home/dev.nix
-    ../../modules/home/apps.nix
+    ../../modules/home/linux-desktop.nix
     ../../modules/home/hyprland.nix
   ];
 
