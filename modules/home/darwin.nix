@@ -37,6 +37,7 @@ in
       default-root-container-orientation = "auto";
       on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
       automatically-unhide-macos-hidden-apps = false;
+      auto-reload-config = true;
 
       # Leave room for the top SketchyBar (height 36 + padding).
       gaps = {
@@ -142,17 +143,23 @@ in
         backspace = [ "close-all-windows-but-current" "mode main" ];
       };
 
+      # The external LG is the primary work display: route every workspace
+      # there. Fall back to 'main' when the LG isn't connected (undocked) so
+      # workspaces still land on the built-in display. The scratchpad "S" is
+      # unassigned, so it defaults to the macOS main display (the MacBook).
+      # NOTE: AeroSpace doesn't support i3-style "switch on the focused
+      # monitor"; a workspace always appears on its assigned monitor.
       workspace-to-monitor-force-assignment = {
-        "1" = "main";
-        "2" = "main";
-        "3" = "main";
-        "4" = "main";
-        "5" = "secondary";
-        "6" = "main";
-        "7" = "main";
-        "8" = "main";
-        "9" = "main";
-        "10" = "main";
+        "1" = [ "LG" "main" ];
+        "2" = [ "LG" "main" ];
+        "3" = [ "LG" "main" ];
+        "4" = [ "LG" "main" ];
+        "5" = [ "LG" "main" ];
+        "6" = [ "LG" "main" ];
+        "7" = [ "LG" "main" ];
+        "8" = [ "LG" "main" ];
+        "9" = [ "LG" "main" ];
+        "10" = [ "LG" "main" ];
       };
     };
   };
