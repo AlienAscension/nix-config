@@ -31,11 +31,9 @@ in
       ];
 
       # Notify SketchyBar when the binding mode changes (main/service).
-      on-mode-changed = [
-        "/bin/bash"
-        "-c"
-        "${sketchybarBin} --trigger aerospace_mode_change"
-      ];
+      # NOTE: on-mode-changed takes AeroSpace commands (not a raw argv array
+      # like exec-on-workspace-change), hence exec-and-forget.
+      on-mode-changed = [ "exec-and-forget ${sketchybarBin} --trigger aerospace_mode_change" ];
 
       enable-normalization-flatten-containers = true;
       enable-normalization-opposite-orientation-for-nested-containers = true;
