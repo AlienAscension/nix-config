@@ -12,8 +12,8 @@ let
   geekom_host_key =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqe5eQYE9f2Bm/W2nXbF6ymjqhlMv9Ibh19q+JJgiar";
 
-  vm_aarch64_host_key =
-    "ssh-ed25519 AAAA...replace...with...vm-aarch64...pubkey";
+  macbook_host_key =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGwWibg2JQrVveN5L4fSVyPHfWy2ejShPt7CZ5UvjQct";
 in
 {
   "secrets/ssh-personal-git.age".publicKeys = [
