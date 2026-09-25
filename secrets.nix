@@ -20,6 +20,7 @@ in
     # desktop_host_key
     laptop_host_key
     geekom_host_key
+    macbook_host_key
   ];
 
   "secrets/ssh-personal-homelab.age".publicKeys = [
