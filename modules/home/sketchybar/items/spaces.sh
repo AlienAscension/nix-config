@@ -7,14 +7,18 @@ for sid in $(aerospace list-workspaces --all); do
         --subscribe "space.$sid" aerospace_workspace_change \
         --set "space.$sid" \
         icon="$sid" \
-        icon.padding_left=12 \
-        icon.padding_right=12 \
-        icon.highlight_color=$RED \
+        icon.font="$FONT:Bold:14.0" \
+        icon.padding_left=10 \
+        icon.padding_right=6 \
+        icon.highlight_color=$MAGENTA \
+        label.font="$APP_FONT" \
+        label.color=$GREY \
+        label.highlight_color=$WHITE \
+        label.padding_left=0 \
+        label.padding_right=10 \
         label.drawing=off \
-        background.color=0x33ffffff \
-        background.corner_radius=6 \
-        background.height=24 \
+        background.color=$BG1 \
         background.drawing=off \
         click_script="aerospace workspace $sid" \
-        script="$PLUGIN_DIR/aerospacer.sh $sid"
+        script="$PLUGIN_DIR/spaces.sh $sid"
 done

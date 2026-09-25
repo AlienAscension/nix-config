@@ -12,8 +12,11 @@ MAGENTA=0xffcba6f7
 GREY=0xff6c7086
 TRANSPARENT=0x00000000
 
-# General bar colors
-BAR_COLOR=0xcc1e1e2e
+# Bar and grouped widgets
+BAR_COLOR=0xf01e1e2e
+BG1=0xff313244
+BG2=0xff45475a
+
 ICON_COLOR=$WHITE
 LABEL_COLOR=$WHITE
 

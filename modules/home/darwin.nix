@@ -30,6 +30,13 @@ in
         "${sketchybarBin} --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
       ];
 
+      # Notify SketchyBar when the binding mode changes (main/service).
+      on-mode-changed = [
+        "/bin/bash"
+        "-c"
+        "${sketchybarBin} --trigger aerospace_mode_change"
+      ];
+
       enable-normalization-flatten-containers = true;
       enable-normalization-opposite-orientation-for-nested-containers = true;
       accordion-padding = 300;
@@ -38,14 +45,14 @@ in
       on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
       automatically-unhide-macos-hidden-apps = false;
 
-      # Leave room for the top SketchyBar (height 36 + padding).
+      # Leave room for the floating top SketchyBar (margin 6 + height 38).
       gaps = {
         inner.horizontal = 8;
         inner.vertical = 8;
         outer.left = 10;
         outer.right = 10;
         outer.bottom = 10;
-        outer.top = 46;
+        outer.top = 54;
       };
 
       # Float common dialog-like apps.

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -9,6 +9,11 @@
   networking.hostName = "macbook";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
+
+  # SketchyBar renders its icons/labels with these.
+  fonts.packages = [
+    pkgs.nerd-fonts.jetbrains-mono
+  ];
 
   system.primaryUser = "lbr";
 
@@ -46,6 +51,9 @@
       # to input-source switching, so Karabiner emits it instead. See the
       # complex modification in modules/home/darwin.nix.
       "karabiner-elements"
+
+      # App icons for SketchyBar workspace pills (see modules/home/sketchybar).
+      "font-sketchybar-app-font"
     ];
   };
 
