@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+# Catppuccin Mocha (matches noctalia / Ghostty on this machine)
+
+BLACK=0xff11111b
+WHITE=0xffcdd6f4
+RED=0xfff38ba8
+GREEN=0xffa6e3a1
+BLUE=0xff89b4fa
+YELLOW=0xfff9e2af
+ORANGE=0xfffab387
+MAGENTA=0xffcba6f7
+GREY=0xff6c7086
+TRANSPARENT=0x00000000
+
+# General bar colors
+BAR_COLOR=0xcc1e1e2e
+ICON_COLOR=$WHITE
+LABEL_COLOR=$WHITE
+
+POPUP_BACKGROUND_COLOR=$BLACK
+POPUP_BORDER_COLOR=$WHITE
+
+SHADOW_COLOR=$BLACK

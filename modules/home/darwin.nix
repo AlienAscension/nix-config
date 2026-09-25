@@ -11,6 +11,10 @@ let
   # environment has a minimal PATH, so exec bindings need absolute paths.
   ghostty = "/Applications/Ghostty.app/Contents/MacOS/ghostty";
   yazi = "/etc/profiles/per-user/lbr/bin/yazi";
+
+  # AeroSpace's launchd environment has a minimal PATH, so its callbacks call
+  # SketchyBar via the store path directly.
+  sketchybarBin = "${pkgs.sketchybar}/bin/sketchybar";
 in
 {
   # AeroSpace tiling window manager — replaces Hyprland on macOS.
@@ -19,19 +23,38 @@ in
     launchd.enable = true;
 
     settings = {
-      # Match the general feel of the Hyprland config
+      # Notify SketchyBar about the focused workspace (see modules/home/sketchybar).
+      exec-on-workspace-change = [
+        "/bin/bash"
+        "-c"
+        "${sketchybarBin} --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
+      ];
+
+      enable-normalization-flatten-containers = true;
+      enable-normalization-opposite-orientation-for-nested-containers = true;
+      accordion-padding = 300;
+      default-root-container-layout = "tiles";
+      default-root-container-orientation = "auto";
+      on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
+      automatically-unhide-macos-hidden-apps = false;
+
+      # Leave room for the top SketchyBar (height 36 + padding).
       gaps = {
-        inner = {
-          horizontal = 5;
-          vertical = 5;
-        };
-        outer = {
-          left = 10;
-          bottom = 10;
-          top = 10;
-          right = 10;
-        };
+        inner.horizontal = 8;
+        inner.vertical = 8;
+        outer.left = 10;
+        outer.right = 10;
+        outer.bottom = 10;
+        outer.top = 46;
       };
+
+      # Float common dialog-like apps.
+      on-window-detected = [
+        { "if".app-name-regex-substring = "finder"; run = "layout floating"; }
+        { "if".app-name-regex-substring = "settings"; run = "layout floating"; }
+        { "if".app-name-regex-substring = "1password"; run = "layout floating"; }
+        { "if".app-name-regex-substring = "quicktime"; run = "layout floating"; }
+      ];
 
       mode.main.binding = {
         # Launchers
@@ -88,9 +111,35 @@ in
         "${mainMod}-shift-9" = [ "move-node-to-workspace 9" "workspace 9" ];
         "${mainMod}-shift-0" = [ "move-node-to-workspace 10" "workspace 10" ];
 
-        # Scratchpad
+        # Join with neighbour (arrows)
+        "${mainMod}-shift-left" = "join-with left";
+        "${mainMod}-shift-right" = "join-with right";
+        "${mainMod}-shift-up" = "join-with up";
+        "${mainMod}-shift-down" = "join-with down";
+
+        # Resize
+        "${mainMod}-shift-minus" = "resize smart -50";
+        "${mainMod}-shift-equal" = "resize smart +50";
+
+        # Layout cycling
+        "${mainMod}-slash" = "layout tiles horizontal vertical";
+        "${mainMod}-comma" = "layout accordion horizontal vertical";
+
+        # Scratchpad / previous workspace
         "${mainMod}-s" = [ "workspace-back-and-forth" ]; # Approximation of special workspace toggle
         "${mainMod}-shift-s" = "move-node-to-workspace S";
+        "${mainMod}-tab" = "workspace-back-and-forth";
+        "${mainMod}-shift-tab" = "move-workspace-to-monitor --wrap-around next";
+
+        # Service mode (esc: reload, r: flatten, f: float, backspace: close others)
+        "${mainMod}-shift-semicolon" = "mode service";
+      };
+
+      mode.service.binding = {
+        esc = [ "reload-config" "mode main" ];
+        r = [ "flatten-workspace-tree" "mode main" ];
+        f = [ "layout floating tiling" "mode main" ];
+        backspace = [ "close-all-windows-but-current" "mode main" ];
       };
 
       workspace-to-monitor-force-assignment = {
@@ -108,15 +157,17 @@ in
     };
   };
 
-  # Menu bar replacement — minimal default config; theming is a follow-up task.
+  # Top bar (Catppuccin Mocha). Structure inspired by
+  # https://github.com/omerxx/dotfiles, with the bar moved from the right edge
+  # to the top. Sources live in modules/home/sketchybar/.
   programs.sketchybar = {
     enable = true;
-    config = ''
-      sketchybar --bar height=32 position=top padding_left=10 padding_right=10
-      sketchybar --default icon.font="SF Pro:Bold:14.0" label.font="SF Pro:Bold:14.0"
-      sketchybar --add item clock right --set clock script="date '+%H:%M'" update_freq=10
-      sketchybar --update
-    '';
+    config = {
+      source = ./sketchybar;
+      recursive = true;
+    };
+    # `aerospace` is used by items/spaces.sh to enumerate workspaces.
+    extraPackages = [ pkgs.aerospace ];
   };
 
   # macOS-native pinentry for GPG Agent

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# SketchyBar — horizontal bar at the top.
+# Structure inspired by https://github.com/omerxx/dotfiles (bar moved right -> top).
+
+CONFIG_DIR="${CONFIG_DIR:-$HOME/.config/sketchybar}"
+
+source "$CONFIG_DIR/colors.sh"
+source "$CONFIG_DIR/icons.sh"
+
+ITEM_DIR="$CONFIG_DIR/items"
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+FONT="SF Pro"
+PADDINGS=3
+
+sketchybar --bar height=36 \
+                 position=top \
+                 color=$BAR_COLOR \
+                 shadow=on \
+                 blur_radius=20 \
+                 padding_left=12 \
+                 padding_right=12 \
+           --default updates=when_shown \
+                 icon.font="$FONT:Bold:14.0" \
+                 icon.color=$ICON_COLOR \
+                 icon.padding_left=$PADDINGS \
+                 icon.padding_right=$PADDINGS \
+                 label.font="$FONT:Semibold:13.0" \
+                 label.color=$LABEL_COLOR \
+                 label.padding_left=$PADDINGS \
+                 label.padding_right=$PADDINGS \
+                 background.padding_left=$PADDINGS \
+                 background.padding_right=$PADDINGS \
+                 popup.background.border_width=2 \
+                 popup.background.corner_radius=11 \
+                 popup.background.border_color=$POPUP_BORDER_COLOR \
+                 popup.background.color=$POPUP_BACKGROUND_COLOR
+
+# Left: Apple menu + AeroSpace workspaces
+source "$ITEM_DIR/apple.sh"
+source "$ITEM_DIR/spaces.sh"
+
+# Right: date & time
+source "$ITEM_DIR/clock.sh"
+
+sketchybar --update
