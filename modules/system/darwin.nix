@@ -42,10 +42,12 @@
     })
   ];
 
-  # Auto-hide the native menu bar — the top bar is SketchyBar now.
-  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+  # Keep the native menu bar visible.
+  system.defaults.NSGlobalDomain._HIHideMenuBar = false;
 
   # Keyboard
+  # Caps Lock is handled by Karabiner instead (tap = Escape, hold = AeroSpace
+  # Hyper); the system-level HID remap would fight it, so leave it off.
   system.keyboard.enableKeyMapping = true;
-  system.keyboard.remapCapsLockToEscape = true;
+  system.keyboard.remapCapsLockToEscape = false;
 }

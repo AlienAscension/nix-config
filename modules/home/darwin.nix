@@ -1,20 +1,18 @@
 { pkgs, lib, ... }:
 
 let
-  # Tiling modifier. On macOS, bare Command is the primary *application*
+  # Tiling "leader". On macOS, bare Command is the primary *application*
   # modifier, so binding cmd-v / cmd-s / cmd-f / cmd-q / cmd-1..9 shadows
-  # Paste / Save / Find / Quit and app tab switching. Control+Option is
-  # essentially unused by apps, so use that instead (the Hyprland "SUPER").
-  mainMod = "ctrl-alt";
+  # Paste / Save / Find / Quit and app tab switching. Instead, Caps Lock is
+  # remapped by Karabiner to Cmd+Ctrl+Option ("Hyper" minus Shift — see the
+  # Karabiner rule below). Shift is deliberately left out so that
+  # leader+shift+... still works for the move-window bindings.
+  mainMod = "cmd-ctrl-alt";
 
   # The ghostty cask ships no `ghostty` CLI symlink and AeroSpace's launchd
   # environment has a minimal PATH, so exec bindings need absolute paths.
   ghostty = "/Applications/Ghostty.app/Contents/MacOS/ghostty";
   yazi = "/etc/profiles/per-user/lbr/bin/yazi";
-
-  # AeroSpace's launchd environment has a minimal PATH, so its callbacks call
-  # SketchyBar via the store path directly.
-  sketchybarBin = "${pkgs.sketchybar}/bin/sketchybar";
 in
 {
   # AeroSpace tiling window manager — replaces Hyprland on macOS.
@@ -23,18 +21,6 @@ in
     launchd.enable = true;
 
     settings = {
-      # Notify SketchyBar about the focused workspace (see modules/home/sketchybar).
-      exec-on-workspace-change = [
-        "/bin/bash"
-        "-c"
-        "${sketchybarBin} --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
-      ];
-
-      # Notify SketchyBar when the binding mode changes (main/service).
-      # NOTE: on-mode-changed takes AeroSpace commands (not a raw argv array
-      # like exec-on-workspace-change), hence exec-and-forget.
-      on-mode-changed = [ "exec-and-forget ${sketchybarBin} --trigger aerospace_mode_change" ];
-
       enable-normalization-flatten-containers = true;
       enable-normalization-opposite-orientation-for-nested-containers = true;
       accordion-padding = 300;
@@ -43,14 +29,13 @@ in
       on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
       automatically-unhide-macos-hidden-apps = false;
 
-      # Leave room for the floating top SketchyBar (margin 6 + height 38).
       gaps = {
         inner.horizontal = 8;
         inner.vertical = 8;
         outer.left = 10;
         outer.right = 10;
         outer.bottom = 10;
-        outer.top = 54;
+        outer.top = 10;
       };
 
       # Float common dialog-like apps.
@@ -168,29 +153,19 @@ in
     };
   };
 
-  # Top bar (Catppuccin Mocha). Structure inspired by
-  # https://github.com/omerxx/dotfiles, with the bar moved from the right edge
-  # to the top. Sources live in modules/home/sketchybar/.
-  programs.sketchybar = {
-    enable = true;
-    config = {
-      source = ./sketchybar;
-      recursive = true;
-    };
-    # `aerospace` is used by items/spaces.sh to enumerate workspaces.
-    extraPackages = [ pkgs.aerospace ];
-  };
-
   # macOS-native pinentry for GPG Agent
   services.gpg-agent.pinentry.package = pkgs.pinentry_mac;
 
-  # macOS cannot bind a bare-modifier combo (e.g. Option+Shift) to input-source
-  # switching, so Karabiner does it. We use `select_input_source` rather than
-  # synthesising the Control+Space shortcut, because it is unaffected by the
-  # physical modifiers still being held while `to_if_alone` fires, and the lazy
-  # passthrough keeps Option+Shift+<key> working for text selection.
+  # Karabiner rules managed here:
+  #   1. Option+Shift switches input source. macOS cannot bind a bare-modifier
+  #      combo to input-source switching, so Karabiner does it. We use
+  #      `select_input_source` rather than synthesising the Control+Space
+  #      shortcut, because it is unaffected by the physical modifiers still
+  #      being held while `to_if_alone` fires, and the lazy passthrough keeps
+  #      Option+Shift+<key> working for text selection.
+  #   2. Caps Lock is the AeroSpace "Hyper" leader (tap = Escape).
   #
-  # Karabiner's own config is managed here so the rule is always active; don't
+  # Karabiner's own config is managed here so the rules are always active; don't
   # edit it from the Karabiner GUI or home-manager will revert it on next switch.
   xdg.configFile."karabiner/karabiner.json" = {
     # `force` because Karabiner rewrites its config as a regular file on launch;
@@ -229,6 +204,41 @@ in
                 };
               in
               builtins.concatMap (c: [ (mk c eurkey german) (mk c german eurkey) ]) combos;
+          }
+          {
+            # Caps Lock is the AeroSpace leader ("Hyper" without Shift), so it
+            # works on every keyboard. Karabiner adds Ctrl+Option on top of
+            # Command, so holding it and pressing a key sends Cmd+Ctrl+Opt+<key>.
+            # Physical Shift is untouched, leaving leader+shift+... free for the
+            # move bindings. A quick tap still emits Escape.
+            description = "Caps Lock: tap = Escape, hold = Hyper (Cmd+Ctrl+Opt)";
+            manipulators = [
+              {
+                type = "basic";
+                from = {
+                  key_code = "caps_lock";
+                  modifiers = { optional = [ "any" ]; };
+                };
+                to = [
+                  {
+                    key_code = "right_command";
+                    modifiers = [ "left_control" "left_option" ];
+                    lazy = true;
+                  }
+                ];
+                to_if_alone = [ { key_code = "escape"; } ];
+                to_if_held_down = [
+                  {
+                    key_code = "right_command";
+                    modifiers = [ "left_control" "left_option" ];
+                  }
+                ];
+                parameters = {
+                  "basic.to_if_alone_timeout_milliseconds" = 200;
+                  "basic.to_if_held_down_threshold_milliseconds" = 200;
+                };
+              }
+            ];
           }
         ];
       }
