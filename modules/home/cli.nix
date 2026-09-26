@@ -108,7 +108,7 @@
 
   programs.git = {
     enable = true;
-    
+
     settings = {
     user = {
       name = "AlienAscension";
@@ -181,6 +181,13 @@
       "raspi" = {
         HostName = "192.168.0.36";
         User = "admin";
+        IdentityFile = "/run/agenix/ssh-personal-homelab";
+        IdentitiesOnly = true;
+      };
+
+      "netcup" = {
+        HostName = "202.61.255.210";
+        User = "root";
         IdentityFile = "/run/agenix/ssh-personal-homelab";
         IdentitiesOnly = true;
       };
