@@ -51,18 +51,20 @@
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = false;
 
-  # Flake-input packages that upstream does not ship in nixpkgs. Mirrors the
-  # list in modules/system/default.nix, which the darwin build NEVER imports:
-  # lib/mkdarwin.nix only pulls in machines/<name>/configuration.nix plus the
-  # agenix/home-manager/nix-homebrew darwin modules, so anything added to the
-  # NixOS system module is silently NixOS-only. That is how sofka (Kubernetes
-  # TUI) ended up missing on the macbook even though it is in the flake inputs.
+  # Base system packages that modules/system/default.nix installs but the
+  # darwin build never imports: lib/mkdarwin.nix assembles the system from
+  # machines/<name>/configuration.nix plus the agenix/home-manager/nix-homebrew
+  # darwin modules, so anything added to the NixOS system module is silently
+  # NixOS-only. Keep this list in sync when adding base packages there. It is
+  # not copied wholesale: btrfs-progs has no darwin package at all, and
+  # smartmontools/usbutils/pciutils are not duplicated here.
   #
-  # sofka's flake exposes aarch64-darwin and warms a binary cache for the
-  # pinned rev; its input deliberately does not follow our nixpkgs (see
-  # flake.nix), so always take the package from `inputs.sofka` and never
-  # re-declare it through an overlay.
+  # `nh` comes from nixpkgs. `sofka` does not: it is a flake input, its flake
+  # exposes aarch64-darwin and warms a binary cache for the pinned rev, and its
+  # input deliberately does not follow our nixpkgs (see flake.nix), so always
+  # take it from `inputs.sofka` and never re-declare it through an overlay.
   environment.systemPackages = [
+    pkgs.nh
     inputs.sofka.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
