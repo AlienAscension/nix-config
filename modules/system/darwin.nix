@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   # Platform-specific darwin system settings.
@@ -59,12 +59,12 @@
   # not copied wholesale: btrfs-progs has no darwin package at all, and
   # smartmontools/usbutils/pciutils are not duplicated here.
   #
-  # `nh` comes from nixpkgs. `sofka` does not: it is a flake input, its flake
-  # exposes aarch64-darwin and warms a binary cache for the pinned rev, and its
-  # input deliberately does not follow our nixpkgs (see flake.nix), so always
-  # take it from `inputs.sofka` and never re-declare it through an overlay.
+  # sofka is deliberately absent: the flake input compiles from source on darwin
+  # (upstream's Cachix cache holds no darwin build), so the macbook takes
+  # upstream's prebuilt binary from the Homebrew tap instead — see the homebrew
+  # block in machines/macbook/configuration.nix. The Linux machines still use
+  # inputs.sofka.
   environment.systemPackages = [
     pkgs.nh
-    inputs.sofka.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
