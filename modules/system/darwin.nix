@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, inputs, ... }:
 
 {
   # Platform-specific darwin system settings.
@@ -50,4 +50,19 @@
   # Hyper); the system-level HID remap would fight it, so leave it off.
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = false;
+
+  # Flake-input packages that upstream does not ship in nixpkgs. Mirrors the
+  # list in modules/system/default.nix, which the darwin build NEVER imports:
+  # lib/mkdarwin.nix only pulls in machines/<name>/configuration.nix plus the
+  # agenix/home-manager/nix-homebrew darwin modules, so anything added to the
+  # NixOS system module is silently NixOS-only. That is how sofka (Kubernetes
+  # TUI) ended up missing on the macbook even though it is in the flake inputs.
+  #
+  # sofka's flake exposes aarch64-darwin and warms a binary cache for the
+  # pinned rev; its input deliberately does not follow our nixpkgs (see
+  # flake.nix), so always take the package from `inputs.sofka` and never
+  # re-declare it through an overlay.
+  environment.systemPackages = [
+    inputs.sofka.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
 }
