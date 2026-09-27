@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, inputs, ... }:
 
 {
   # Platform-specific darwin system settings.
@@ -50,4 +50,21 @@
   # Hyper); the system-level HID remap would fight it, so leave it off.
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = false;
+
+  # Base system packages that modules/system/default.nix installs but the
+  # darwin build never imports: lib/mkdarwin.nix assembles the system from
+  # machines/<name>/configuration.nix plus the agenix/home-manager/nix-homebrew
+  # darwin modules, so anything added to the NixOS system module is silently
+  # NixOS-only. Keep this list in sync when adding base packages there. It is
+  # not copied wholesale: btrfs-progs has no darwin package at all, and
+  # smartmontools/usbutils/pciutils are not duplicated here.
+  #
+  # `nh` comes from nixpkgs. `sofka` does not: it is a flake input, its flake
+  # exposes aarch64-darwin and warms a binary cache for the pinned rev, and its
+  # input deliberately does not follow our nixpkgs (see flake.nix), so always
+  # take it from `inputs.sofka` and never re-declare it through an overlay.
+  environment.systemPackages = [
+    pkgs.nh
+    inputs.sofka.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
 }
