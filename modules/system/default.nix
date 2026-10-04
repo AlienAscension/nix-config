@@ -45,6 +45,14 @@
     allowedUDPPorts = [ 22 ];
   };
 
+  # Mullvad VPN — official app (GUI + CLI) and daemon. The module defaults to the
+  # CLI-only pkgs.mullvad; pkgs.mullvad-vpn adds the GUI. enableEarlyBootBlocking
+  # stays off (its default) since it can conflict with NetworkManager/firewall.
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
+
   # SSH
   services.openssh = {
     enable = true;
