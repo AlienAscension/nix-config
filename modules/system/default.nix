@@ -8,6 +8,7 @@
   nixpkgs.overlays = [
     (final: prev: {
       opencode = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
+      graphify = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.graphify;
     })
   ];
 
@@ -107,6 +108,7 @@
     inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
     (callPackage ../../pkgs/topf.nix {})
     inputs.sofka.packages.${pkgs.stdenv.hostPlatform.system}.default
+    graphify
   ];
 
   # Podman
