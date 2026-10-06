@@ -64,6 +64,13 @@
   # upstream's prebuilt binary from the Homebrew tap instead — see the homebrew
   # block in machines/macbook/configuration.nix. The Linux machines still use
   # inputs.sofka.
+  #
+  # witr is likewise deliberately absent: it IS in the pinned nixpkgs, but the
+  # nixos-26.05 channel publishes no aarch64-darwin build for it (no Hydra job
+  # in the release jobset), so Nix would compile it from source on the Mac. It
+  # is in homebrew-core, so the macbook takes it from Homebrew instead — see the
+  # homebrew block in machines/macbook/configuration.nix. The Linux machines
+  # take it from nixpkgs — see modules/system/default.nix.
   environment.systemPackages = [
     pkgs.nh
   ];
