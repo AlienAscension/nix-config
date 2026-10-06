@@ -45,7 +45,16 @@
     # inputs.sofka. Listing the tap matters because cleanup = "zap" untaps
     # anything not listed here.
     taps = [ "nklmilojevic/sofka" ];
-    brews = [ "nklmilojevic/sofka/sofka" ];
+    brews = [
+      "nklmilojevic/sofka/sofka"
+
+      # witr is in the pinned nixpkgs, but nixos-26.05 publishes no
+      # aarch64-darwin build for it (no Hydra job in the release jobset), so
+      # Nix would compile it from source on the Mac. It lives in homebrew-core,
+      # so no tap is needed. The NixOS machines take it from nixpkgs — see
+      # modules/system/default.nix.
+      "witr"
+    ];
 
     casks = [
       # Terminal used by the AeroSpace launcher binds (ghostty is not in the

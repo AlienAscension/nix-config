@@ -112,6 +112,7 @@
     smartmontools
     usbutils
     pciutils
+    witr
     nh
     inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
     (callPackage ../../pkgs/topf.nix {})
