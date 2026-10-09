@@ -159,7 +159,14 @@ in
   # Python package/project manager. Installed via nix so it survives reboots:
   # the upstream curl installer appends PATH updates to ~/.zshrc, which is a
   # read-only home-manager symlink here ("Permission denied").
-  home.packages = [ pkgs.uv ];
+  #
+  # docker + colima: the Linux machines get a `docker` CLI for free from
+  # virtualisation.podman's dockerCompat (modules/system/default.nix), but
+  # macOS has no kernel to run containers natively. colima supplies the Linux
+  # VM; `colima start` boots it, then the docker CLI talks to it over the
+  # socket colima configures. No GUI — this is deliberately lighter than
+  # Docker Desktop.
+  home.packages = [ pkgs.uv pkgs.docker pkgs.colima ];
 
   # Karabiner rules managed here:
   #   1. Option+Shift switches input source. macOS cannot bind a bare-modifier
