@@ -506,6 +506,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-darwin-legacy": {
+      "locked": {
+        "lastModified": 1788334797,
+        "narHash": "sha256-nskSa8kDimM7F0VFSP8IdoSNo4G0vKzOtxwvOFpoGDI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c19db427a1fdfc7591c0b0baeb4665dcef2c61da",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-26.05-darwin",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1790822859,
@@ -590,6 +606,27 @@
         "type": "github"
       }
     },
+    "nono": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-darwin-legacy": "nixpkgs-darwin-legacy"
+      },
+      "locked": {
+        "lastModified": 1791218082,
+        "narHash": "sha256-BBaCEKQLkKuHtsfuP7tqFqKNnck8H95Ft798Q+1c4f0=",
+        "owner": "nolabs-ai",
+        "repo": "nono",
+        "rev": "9edf3ea93956e3bef7b089e8b4a20a6102416eb7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nolabs-ai",
+        "repo": "nono",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -624,6 +661,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "noctalia": "noctalia",
         "noctalia-greeter": "noctalia-greeter",
+        "nono": "nono",
         "rose-pine-hyprcursor": "rose-pine-hyprcursor",
         "sofka": "sofka"
       }

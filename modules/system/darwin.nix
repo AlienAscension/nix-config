@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   # Platform-specific darwin system settings.
@@ -73,5 +73,16 @@
   # take it from nixpkgs — see modules/system/default.nix.
   environment.systemPackages = [
     pkgs.nh
+
+    # Claude Code — Anthropic's agentic coding CLI (unfree; allowUnfree is set
+    # above). The pinned nixpkgs publishes an aarch64-darwin build, so no
+    # Homebrew cask is needed.
+    pkgs.claude-code
+
+    # nono — sandboxes agents like Claude Code/opencode with least-privilege
+    # fs/network/credential policies. Taken from the flake input's `prebuilt`
+    # output (upstream release binary) rather than `default`, which compiles
+    # the Rust crate from source. See flake.nix.
+    inputs.nono.packages.${pkgs.stdenv.hostPlatform.system}.prebuilt
   ];
 }

@@ -57,6 +57,21 @@
     sofka = {
       url = "github:nklmilojevic/sofka/v0.25.3";
     };
+
+    # nono — kernel-enforced sandbox for AI agents (Claude Code, opencode, …).
+    # We consume the `prebuilt` output: `default` builds the Rust crate from
+    # source on every bump, whereas `prebuilt` just fetches upstream's release
+    # tarball. `nixpkgs` follows ours because the prebuilt derivation only needs
+    # stdenv/fetchurl. See modules/system/darwin.nix.
+    #
+    # Tracking `main` (rev pinned in flake.lock) rather than a release tag: the
+    # v0.79.0 tag's baked-in aarch64-darwin tarball hash is stale (upstream's
+    # release job refreshes hashes on main after tagging), so `#prebuilt` fails
+    # the fixed-output hash check on that tag.
+    nono = {
+      url = "github:nolabs-ai/nono";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ { nixpkgs, home-manager, hyprland, agenix, ... }:
