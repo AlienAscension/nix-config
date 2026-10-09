@@ -156,6 +156,11 @@ in
   # macOS-native pinentry for GPG Agent
   services.gpg-agent.pinentry.package = pkgs.pinentry_mac;
 
+  # Python package/project manager. Installed via nix so it survives reboots:
+  # the upstream curl installer appends PATH updates to ~/.zshrc, which is a
+  # read-only home-manager symlink here ("Permission denied").
+  home.packages = [ pkgs.uv ];
+
   # Karabiner rules managed here:
   #   1. Option+Shift switches input source. macOS cannot bind a bare-modifier
   #      combo to input-source switching, so Karabiner does it. We use
