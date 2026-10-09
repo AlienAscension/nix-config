@@ -171,6 +171,13 @@
         IdentitiesOnly = true;
       };
 
+      "gitlab.inovex.de" = {
+        User = "git";
+        HostName = "gitlab.inovex.de";
+        IdentityFile = "/run/agenix/ssh-work-git";
+        IdentitiesOnly = true;
+      };
+
       "cloud.lindabre.de" = {
         User = "root";
         HostName = "cloud.lindabre.de";

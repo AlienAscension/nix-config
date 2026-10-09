@@ -11,6 +11,13 @@
       mode = "0600";
     };
 
+    ssh-work-git = {
+      file = ../../secrets/ssh-work-git.age;
+      owner = "lbr";
+      group = "staff";
+      mode = "0600";
+    };
+
     # ssh-personal-homelab is not encrypted to macbook_host_key, so it cannot
     # be decrypted here (see ../../secrets.nix).
     # ssh-personal-homelab = {

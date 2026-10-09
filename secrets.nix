@@ -28,4 +28,8 @@ in
     laptop_host_key
     geekom_host_key
   ];
+
+  "secrets/ssh-work-git.age".publicKeys = [
+    macbook_host_key
+  ];
 }
