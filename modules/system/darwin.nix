@@ -79,6 +79,9 @@
     # Homebrew cask is needed.
     pkgs.claude-code
 
+    # GitLab CLI (glab).
+    pkgs.glab
+
     # nono — sandboxes agents like Claude Code/opencode with least-privilege
     # fs/network/credential policies. Taken from the flake input's `prebuilt`
     # output (upstream release binary) rather than `default`, which compiles
