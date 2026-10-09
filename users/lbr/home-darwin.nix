@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -12,6 +12,9 @@
   home.username = "lbr";
   home.homeDirectory = "/Users/lbr";
   home.stateVersion = "26.05";
+
+  # nodejs/npx — macbook-only, not shared via modules/home/dev.nix.
+  home.packages = [ pkgs.nodejs ];
 
   programs.git = {
     enable = true;
