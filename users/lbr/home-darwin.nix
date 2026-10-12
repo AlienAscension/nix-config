@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -18,7 +18,7 @@
 
   programs.git = {
     enable = true;
-    settings.user.name = "AlienAscension";
-    # Email is set manually after install (private): git config --global user.email <email>
+    settings.user.name = lib.mkForce "Linus Breitenberger";
+    settings.user.email = lib.mkForce "linus.breitenberger@inovex.de";
   };
 }
