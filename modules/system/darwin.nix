@@ -39,6 +39,21 @@
             ++ prev.lib.optionals prev.stdenv.hostPlatform.isDarwin [ prev.sysctl ]
           )}
       '';
+
+      # Claude Code — cherry-picked from nixpkgs-unstable instead of the pinned
+      # nixos-26.05 channel. Anthropic ships new CLI versions frequently (new
+      # model support, bugfixes), and the stable channel lags too far behind to
+      # be usable day-to-day. See flake.nix for why nixpkgs-unstable exists.
+      #
+      # Re-imported (not `.legacyPackages`) because that attribute is a
+      # separate nixpkgs instantiation with its own default config — the
+      # `nixpkgs.config.allowUnfree = true;` set below only applies to the
+      # main `pkgs`, so claude-code's unfree license would otherwise still be
+      # rejected.
+      claude-code = (import inputs.nixpkgs-unstable {
+        system = prev.stdenv.hostPlatform.system;
+        config.allowUnfree = true;
+      }).claude-code;
     })
   ];
 
