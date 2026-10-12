@@ -166,7 +166,7 @@ in
   # VM; `colima start` boots it, then the docker CLI talks to it over the
   # socket colima configures. No GUI — this is deliberately lighter than
   # Docker Desktop.
-  home.packages = [ pkgs.uv pkgs.docker pkgs.colima ];
+  home.packages = [ pkgs.uv pkgs.docker pkgs.colima pkgs.lima ];
 
   # Karabiner rules managed here:
   #   1. Option+Shift switches input source. macOS cannot bind a bare-modifier
