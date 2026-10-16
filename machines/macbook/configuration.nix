@@ -35,15 +35,13 @@
 
   homebrew = {
     enable = true;
-    onActivation.cleanup = "zap";
 
     # sofka — upstream publishes prebuilt macOS release binaries through this
     # tap, whereas the flake input would compile from source on every version
     # bump (upstream's Cachix cache holds no darwin build). Same call as the
     # ghostty cask below: when nothing Nix-side can hand you a ready-made darwin
     # binary, let Homebrew own it. The NixOS machines still take sofka from
-    # inputs.sofka. Listing the tap matters because cleanup = "zap" untaps
-    # anything not listed here.
+    # inputs.sofka.
     taps = [ "nklmilojevic/sofka" ];
     brews = [
       "nklmilojevic/sofka/sofka"
