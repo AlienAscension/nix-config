@@ -38,7 +38,8 @@
   boot.extraModprobeConfig = "options cfg80211 ieee80211_regdom=DE";
 
   # iw — needed by Valve's frame-dongle-troubleshoot.sh to inspect the link.
-  environment.systemPackages = [ pkgs.iw ];
+  # lutris — game launcher (Wine/Steam/emulators) for this box.
+  environment.systemPackages = [ pkgs.iw pkgs.lutris ];
 
   # i2c access for ddcutil (external monitor brightness via DDC/CI)
   hardware.i2c.enable = true;
