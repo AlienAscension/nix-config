@@ -43,25 +43,4 @@
 
   # Swap — zram
   zramSwap.enable = true;
-
-  # Snapper for automated snapshots (nixpkgs 26.05 API: no enable, snapshotInterval)
-  services.snapper = {
-    snapshotInterval = "hourly";
-    configs = {
-      root = {
-        SUBVOLUME = "/";
-        APPEND_QUOTA_GROUPS = "yes";
-        SPACE_LIMIT = "0.5";
-        FREE_LIMIT = "0.2";
-        TIMELINE_CREATE = true;
-        TIMELINE_CLEAN = true;
-        TIMELINE_MIN_AGE = "1800";
-        TIMELINE_LIMIT_HOURLY = "10";
-        TIMELINE_LIMIT_DAILY = "10";
-        TIMELINE_LIMIT_WEEKLY = "0";
-        TIMELINE_LIMIT_MONTHLY = "10";
-        TIMELINE_LIMIT_YEARLY = "10";
-      };
-    };
-  };
 }
