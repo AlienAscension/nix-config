@@ -12,13 +12,16 @@ let
     inputs.agenix.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     {
+      networking.hostName = name;
+
       environment.systemPackages = [
         inputs.agenix.packages.${system}.default
       ];
-      
+
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.sharedModules = [ inputs.noctalia.homeModules.default ];
+      home-manager.users.${user} = import ../users/${user}/home.nix;
     }
   ];
 in

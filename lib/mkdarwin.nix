@@ -13,12 +13,15 @@ let
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-homebrew.darwinModules.nix-homebrew
     {
+      networking.hostName = name;
+
       environment.systemPackages = [
         inputs.agenix.packages.${system}.default
       ];
 
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+      home-manager.users.${user} = import ../users/${user}/home-darwin.nix;
     }
   ];
 in

@@ -2,6 +2,7 @@
 
 {
   hardware.enableRedistributableFirmware = true;
+  hardware.cpu.intel.updateMicrocode = true;
 
   # Intel i915 (Meteor Lake / Intel Arc integrated) — modesetting driver
   services.xserver.videoDrivers = [ "modesetting" ];

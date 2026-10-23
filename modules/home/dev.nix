@@ -15,7 +15,6 @@
     fluxcd
     cilium-cli
     hubble
-    krew
     zed-editor
     opencode
 

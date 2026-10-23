@@ -12,7 +12,8 @@ let
   # The ghostty cask ships no `ghostty` CLI symlink and AeroSpace's launchd
   # environment has a minimal PATH, so exec bindings need absolute paths.
   ghostty = "/Applications/Ghostty.app/Contents/MacOS/ghostty";
-  yazi = "/etc/profiles/per-user/lbr/bin/yazi";
+  yazi = "${pkgs.yazi}/bin/yazi";
+  workspaces = lib.range 1 10;
 in
 {
   # AeroSpace tiling window manager — replaces Hyprland on macOS.
@@ -39,11 +40,11 @@ in
       };
 
       # Float common dialog-like apps.
-      on-window-detected = [
-        { "if".app-name-regex-substring = "finder"; run = "layout floating"; }
-        { "if".app-name-regex-substring = "settings"; run = "layout floating"; }
-        { "if".app-name-regex-substring = "1password"; run = "layout floating"; }
-        { "if".app-name-regex-substring = "quicktime"; run = "layout floating"; }
+      on-window-detected = map (app: { "if".app-name-regex-substring = app; run = "layout floating"; }) [
+        "finder"
+        "settings"
+        "1password"
+        "quicktime"
       ];
 
       mode.main.binding = {
@@ -78,29 +79,6 @@ in
         "${mainMod}-shift-k" = "move up";
         "${mainMod}-shift-l" = "move right";
 
-        # Workspaces (cmd+1-0 to switch, cmd+shift+1-0 to move window)
-        "${mainMod}-1" = "workspace 1";
-        "${mainMod}-2" = "workspace 2";
-        "${mainMod}-3" = "workspace 3";
-        "${mainMod}-4" = "workspace 4";
-        "${mainMod}-5" = "workspace 5";
-        "${mainMod}-6" = "workspace 6";
-        "${mainMod}-7" = "workspace 7";
-        "${mainMod}-8" = "workspace 8";
-        "${mainMod}-9" = "workspace 9";
-        "${mainMod}-0" = "workspace 10";
-
-        "${mainMod}-shift-1" = [ "move-node-to-workspace 1" "workspace 1" ];
-        "${mainMod}-shift-2" = [ "move-node-to-workspace 2" "workspace 2" ];
-        "${mainMod}-shift-3" = [ "move-node-to-workspace 3" "workspace 3" ];
-        "${mainMod}-shift-4" = [ "move-node-to-workspace 4" "workspace 4" ];
-        "${mainMod}-shift-5" = [ "move-node-to-workspace 5" "workspace 5" ];
-        "${mainMod}-shift-6" = [ "move-node-to-workspace 6" "workspace 6" ];
-        "${mainMod}-shift-7" = [ "move-node-to-workspace 7" "workspace 7" ];
-        "${mainMod}-shift-8" = [ "move-node-to-workspace 8" "workspace 8" ];
-        "${mainMod}-shift-9" = [ "move-node-to-workspace 9" "workspace 9" ];
-        "${mainMod}-shift-0" = [ "move-node-to-workspace 10" "workspace 10" ];
-
         # Join with neighbour (arrows)
         "${mainMod}-shift-left" = "join-with left";
         "${mainMod}-shift-right" = "join-with right";
@@ -123,7 +101,15 @@ in
 
         # Service mode (esc: reload, r: flatten, f: float, backspace: close others)
         "${mainMod}-shift-semicolon" = "mode service";
-      };
+      } // lib.mergeAttrsList (map (i:
+        let
+          ws = toString i;
+          key = toString (lib.mod i 10);
+        in {
+          "${mainMod}-${key}" = "workspace ${ws}";
+          "${mainMod}-shift-${key}" = [ "move-node-to-workspace ${ws}" "workspace ${ws}" ];
+        }
+      ) workspaces);
 
       mode.service.binding = {
         esc = [ "reload-config" "mode main" ];
@@ -138,18 +124,8 @@ in
       # unassigned, so it defaults to the macOS main display (the MacBook).
       # NOTE: AeroSpace doesn't support i3-style "switch on the focused
       # monitor"; a workspace always appears on its assigned monitor.
-      workspace-to-monitor-force-assignment = {
-        "1" = [ "LG" "main" ];
-        "2" = [ "LG" "main" ];
-        "3" = [ "LG" "main" ];
-        "4" = [ "LG" "main" ];
-        "5" = [ "LG" "main" ];
-        "6" = [ "LG" "main" ];
-        "7" = [ "LG" "main" ];
-        "8" = [ "LG" "main" ];
-        "9" = [ "LG" "main" ];
-        "10" = [ "LG" "main" ];
-      };
+      workspace-to-monitor-force-assignment =
+        lib.genAttrs (map toString workspaces) (_: [ "LG" "main" ]);
     };
   };
 

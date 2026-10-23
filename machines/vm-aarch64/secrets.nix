@@ -1,13 +1,11 @@
 {
   # agenix secret declarations for this host
-  # Uncomment after first boot when SSH host key exists
-  # age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  # Uncomment after first boot when SSH host key is added to ../../secrets.nix
   #
-  # age.secrets = {
-  #   linus-ssh-private-key = {
-  #     file = ../../secrets/linus-ssh-private-key.age;
-  #     owner = "linus";
-  #     group = "users";
-  #   };
+  # age.secrets.ssh-personal-git = {
+  #   file = ../../secrets/ssh-personal-git.age;
+  #   owner = "linus";
+  #   group = "users";
+  #   mode = "0600";
   # };
 }

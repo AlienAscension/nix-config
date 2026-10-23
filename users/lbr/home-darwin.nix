@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -16,9 +16,8 @@
   # nodejs/npx — macbook-only, not shared via modules/home/dev.nix.
   home.packages = [ pkgs.nodejs ];
 
-  programs.git = {
-    enable = true;
-    settings.user.name = lib.mkForce "Linus Breitenberger";
-    settings.user.email = lib.mkForce "linus.breitenberger@inovex.de";
+  programs.git.settings.user = {
+    name = "Linus Breitenberger";
+    email = "linus.breitenberger@inovex.de";
   };
 }

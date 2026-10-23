@@ -67,7 +67,7 @@
         # keeps the stale dump and the new package's completions never load.
         _zcomp_stamp="$HOME/.cache/zsh/.completions-fingerprint"
         mkdir -p "$_zcomp_stamp:h"
-        _zcomp_fp="$({ for p in ''${(z)NIX_PROFILES}; do ls -1 "$p/share/zsh/site-functions" 2>/dev/null; done; } | sort | md5sum | cut -d' ' -f1)"
+        _zcomp_fp="$({ for p in ''${(z)NIX_PROFILES}; do ls -1 "$p/share/zsh/site-functions" 2>/dev/null; done; } | sort | cksum | cut -d' ' -f1,2)"
         if [[ ! -f "$_zcomp_stamp" || "$(<$_zcomp_stamp)" != "$_zcomp_fp" ]]; then
           rm -f "$HOME"/.zcompdump*(N) "$HOME"/.cache/oh-my-zsh/completions/.zcompdump*(N)
         fi
@@ -89,9 +89,6 @@
         alias kubectl=kubecolor
         compdef kubecolor=kubectl
 
-        # atuin
-        eval "$(atuin init zsh)"
-
         # krew
         export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
@@ -106,16 +103,7 @@
     enableZshIntegration = true;
   };
 
-  programs.git = {
-    enable = true;
-
-    settings = {
-    user = {
-      name = "AlienAscension";
-      email = "148532831+AlienAscension@users.noreply.github.com";
-    };
-  };
-};
+  programs.git.enable = true;
 
   programs.delta = {
     enable = true;
@@ -128,7 +116,6 @@
     mouse = true;
     terminal = "xterm-256color";
     extraConfig = ''
-      set -g default-terminal "xterm-256color"
       set -ag terminal-overrides ",xterm-256color:RGB"
     '';
   };
@@ -149,70 +136,60 @@
     enableDefaultConfig = false;
 
     settings = {
+      "*" = {
+        IdentitiesOnly = true;
+      };
+
       "github.com" = {
         User = "git";
-        HostName = "github.com";
         IdentityFile = "/run/agenix/ssh-personal-git";
-        IdentitiesOnly = true;
       };
 
       "codeberg.org" = {
         User = "AlienAscension";
-        HostName = "codeberg.org";
         IdentityFile = "/run/agenix/ssh-personal-git";
-        IdentitiesOnly = true;
       };
 
       "git.lindabre.de" = {
         User = "git";
-        HostName = "git.lindabre.de";
         Port = 2222;
         IdentityFile = "/run/agenix/ssh-personal-git";
-        IdentitiesOnly = true;
       };
 
       "gitlab.inovex.de" = {
         User = "git";
-        HostName = "gitlab.inovex.de";
         IdentityFile = "/run/agenix/ssh-work-git";
-        IdentitiesOnly = true;
       };
 
       "cloud.lindabre.de" = {
         User = "root";
-        HostName = "cloud.lindabre.de";
         IdentityFile = "/run/agenix/ssh-personal-homelab";
-        IdentitiesOnly = true;
       };
 
       "raspi" = {
         HostName = "192.168.0.36";
         User = "admin";
         IdentityFile = "/run/agenix/ssh-personal-homelab";
-        IdentitiesOnly = true;
       };
 
       "netcup" = {
         HostName = "202.61.255.210";
         User = "root";
         IdentityFile = "/run/agenix/ssh-personal-homelab";
-        IdentitiesOnly = true;
       };
 
       "nas" = {
         HostName = "192.168.0.34";
         User = "admin";
         IdentityFile = "/run/agenix/ssh-personal-homelab";
-        IdentitiesOnly = true;
+      };
     };
   };
-};
 
   home.packages = with pkgs; [
     ripgrep
     fd
     fzf
-    eza
     bat
     git-filter-repo
     gh
@@ -230,7 +207,6 @@
   ];
 
   home.sessionVariables = {
-    EDITOR = "nvim";
     VISUAL = "nvim";
   };
 }

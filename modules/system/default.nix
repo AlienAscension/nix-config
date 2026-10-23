@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
   # Allow unfree packages (e.g. discord)
@@ -43,7 +43,6 @@
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 22 ];
-    allowedUDPPorts = [ 22 ];
   };
 
   # Mullvad VPN — official app (GUI + CLI) and daemon. The module defaults to the
@@ -80,17 +79,17 @@
   # Locale
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
-  };
+  i18n.extraLocaleSettings = lib.genAttrs [
+    "LC_ADDRESS"
+    "LC_IDENTIFICATION"
+    "LC_MEASUREMENT"
+    "LC_MONETARY"
+    "LC_NAME"
+    "LC_NUMERIC"
+    "LC_PAPER"
+    "LC_TELEPHONE"
+    "LC_TIME"
+  ] (_: "de_DE.UTF-8");
 
   # Keyboard
   console.keyMap = "us";
@@ -146,12 +145,18 @@
     config.common.default = "*";
   };
 
+  # Enable Hyprland via the Hyprland flake's NixOS module
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+  };
+
   # Display manager — noctalia-greeter (greetd). Replaces SDDM.
   # The module enables greetd and sets the session command automatically;
   # it also enables accounts-daemon for user avatars on the login screen.
   imports = [ inputs.noctalia-greeter.nixosModules.default ];
 
-  programs.noctalia-greeter = {
+  services.displayManager.noctalia-greeter = {
     enable = true;
     settings = {
       cursor = {

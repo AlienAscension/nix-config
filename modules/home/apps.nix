@@ -10,9 +10,9 @@
     flameshot
     kdePackages.okular
   ] ++ lib.optionals pkgs.stdenv.isx86_64 [
-    # Spotify and Steam are not packaged for aarch64-linux in this nixpkgs pin.
+    # Spotify is not packaged for aarch64-linux in this nixpkgs pin.
+    # Steam is enabled system-wide via `programs.steam.enable` on x86_64 hosts.
     spotify
-    steam
   ];
 
   xdg.mimeApps = {

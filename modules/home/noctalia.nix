@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   # Noctalia desktop shell — bar, dock, launcher, control center, notifications,
@@ -19,7 +19,7 @@
       wallpaper = {
         enabled = true;
         fill_color = "#1e1e2e";
-        default.path = "/home/linus/Pictures/wallpaper.jpg";
+        default.path = "${config.home.homeDirectory}/Pictures/wallpaper.jpg";
       };
 
       brightness = {

@@ -3,10 +3,7 @@
 {
   imports = [
     ../../modules/system/darwin.nix
-    ./secrets.nix
   ];
-
-  networking.hostName = "macbook";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
@@ -74,9 +71,6 @@
   users.users.lbr = {
     home = "/Users/lbr";
   };
-
-  # Home Manager
-  home-manager.users.lbr = import ../../users/lbr/home-darwin.nix;
 
   # Move pre-existing dotfiles aside (e.g. a hand-written ~/.ssh/config)
   # instead of aborting activation with "Existing file ... would be clobbered".

@@ -14,9 +14,8 @@
   home.homeDirectory = "/home/work";
   home.stateVersion = "26.05";
 
-  programs.git = {
-    enable = true;
-    userName = "work";  # Replace with real work name
-    userEmail = "work@example.com";  # Replace with real work email
+  programs.git.settings.user = {
+    name = "work";  # Replace with real work name
+    email = "work@example.com";  # Replace with real work email
   };
 }

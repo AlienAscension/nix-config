@@ -22,9 +22,8 @@
     XCURSOR_SIZE = 30;
   };
 
-  programs.git = {
-    enable = true;
-    settings.user.name = "AlienAscension";
-    # Email is set manually after install (private): git config --global user.email <email>
+  programs.git.settings.user = {
+    name = "AlienAscension";
+    email = "148532831+AlienAscension@users.noreply.github.com";
   };
 }
