@@ -1,7 +1,7 @@
 # Build a nix-darwin system for a named machine with a per-machine architecture.
 # Mirrors lib/mksystem.nix but for macOS: uses nix-darwin's darwinSystem,
-# agenix/home-manager/nix-homebrew darwin modules, and imports the machine's
-# configuration.nix (which itself wires in the per-user home-manager entrypoint).
+# agenix/home-manager/nix-homebrew darwin modules, imports the machine's
+# configuration.nix and secrets.nix, and wires the per-user home-manager entrypoint.
 { nixpkgs, inputs }:
 
 name:
