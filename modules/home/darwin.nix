@@ -11,8 +11,32 @@ let
 
   # The ghostty cask ships no `ghostty` CLI symlink and AeroSpace's launchd
   # environment has a minimal PATH, so exec bindings need absolute paths.
-  ghostty = "/Applications/Ghostty.app/Contents/MacOS/ghostty";
   yazi = "${pkgs.yazi}/bin/yazi";
+
+  # Executing the ghostty binary directly starts a separate app instance (its
+  # own Dock icon) every time. Instead, ask the running instance for a new
+  # window via AppleScript, and only launch the app when it isn't running.
+  # Errors go to ~/Library/Logs/ghostty-window.log (AeroSpace discards them).
+  ghosttyWindowScript = pkgs.writeShellScript "ghostty-window" ''
+    exec 2>>"$HOME/Library/Logs/ghostty-window.log"
+    echo "$(date) ghostty-window $*" >&2
+    if [ "$(/usr/bin/osascript -e 'application "Ghostty" is running')" = true ]; then
+      /usr/bin/osascript - "$@" <<'EOF'
+    on run argv
+      tell application "Ghostty"
+        set cfg to new surface configuration
+        if (count of argv) > 0 then set command of cfg to item 1 of argv
+        new window with configuration cfg
+      end tell
+    end run
+    EOF
+    elif [ $# -gt 0 ]; then
+      /usr/bin/open -a Ghostty --args -e "$1"
+    else
+      /usr/bin/open -a Ghostty
+    fi
+  '';
+  ghosttyWindow = cmd: "exec-and-forget ${ghosttyWindowScript}${lib.optionalString (cmd != null) " ${cmd}"}";
   workspaces = lib.range 1 10;
 in
 {
@@ -49,8 +73,10 @@ in
 
       mode.main.binding = {
         # Launchers
-        "${mainMod}-enter" = "exec-and-forget ${ghostty}";
-        "${mainMod}-y" = "exec-and-forget ${ghostty} -e ${yazi}";
+        "${mainMod}-enter" = ghosttyWindow null;
+        # AeroSpace binds by US-QWERTY key position: "z" is the key labeled Y on
+        # the German MacBook keyboard (bottom left, one-hand reachable).
+        "${mainMod}-z" = ghosttyWindow yazi;
         # TODO: choose a launcher replacement for `noctalia msg panel-toggle launcher`
         # (Raycast/Alfred/Spotlight) and bind it here.
         # "${mainMod}-d" = "exec-and-forget ...";
@@ -58,7 +84,8 @@ in
         # "${mainMod}-l" = "exec-and-forget ...";
 
         # Window management
-        "${mainMod}-q" = "close";
+        # Closing an app's last window doesn't quit it on macOS (Dock dot stays).
+        "${mainMod}-q" = "close --quit-if-last-window";
         "${mainMod}-v" = "layout floating tiling";
         "${mainMod}-f" = "fullscreen";
         "f11" = "fullscreen";
