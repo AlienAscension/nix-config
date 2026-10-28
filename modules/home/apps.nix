@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     chiaki
     firefox
+    gnome-calculator
     signal-desktop
     keepassxc
     libreoffice
