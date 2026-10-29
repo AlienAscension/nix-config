@@ -191,6 +191,7 @@
     fd
     fzf
     bat
+    bottom
     git-filter-repo
     gh
     pangolin-cli
