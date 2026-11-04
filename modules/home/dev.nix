@@ -27,7 +27,7 @@
     opentofu
     sops
 
-    # Podman desktop
-    podman-desktop
+    # Podman 
+    podman
   ];
 }
