@@ -6,10 +6,20 @@
 
   # Cherry-pick newer packages from nixpkgs-unstable (see flake.nix inputs)
   nixpkgs.overlays = [
-    (final: prev: {
-      opencode = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
-      graphify = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.graphify;
-    })
+    (final: prev:
+      let
+        unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      in
+      {
+        # shortcut: nixpkgs' opencode 2.2.5 node_modules hash is wrong
+        # (NixOS/nixpkgs#582673, fixed by #582675); drop once unstable carries the fix.
+        opencode = unstable.opencode.overrideAttrs (old: {
+          node_modules = old.node_modules.overrideAttrs (_: {
+            outputHash = "sha256-prx9dX7kUvs/E3zopkaPk5LXh3xJAy5sZeum/W8L7cA=";
+          });
+        });
+        graphify = unstable.graphify;
+      })
   ];
 
   # Boot
