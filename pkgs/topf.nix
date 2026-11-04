@@ -2,7 +2,7 @@
 
 buildGoModule (finalAttrs: {
   pname = "topf";
-  version = "0.5.0";
+  version = "0.6.2";
 
   src = fetchFromGitHub {
     owner = "postfinance";
