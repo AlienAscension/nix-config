@@ -21,6 +21,7 @@
     # Development
     go
     golangci-lint
+    python3
 
     # Infrastructure
     opentofu
