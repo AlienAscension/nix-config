@@ -1,6 +1,6 @@
-{ lib, buildGoModule, fetchFromGitHub }:
+{ lib, buildGoModule, fetchFromGitHub, go_1_27 }:
 
-buildGoModule (finalAttrs: {
+(buildGoModule.override { go = go_1_27; }) (finalAttrs: {
   pname = "topf";
   version = "0.6.2";
 
@@ -8,12 +8,14 @@ buildGoModule (finalAttrs: {
     owner = "postfinance";
     repo = "topf";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-q9Gr1UuFOxptui6ZOhE0qTMXXVAkLjkAX0n9rzlpaOU=";
+    hash = "sha256-frUyZtpA0iyFwHxlN5SqZ0WFfU4sMalmdkHtulg+B3I=";
   };
 
-  vendorHash = "sha256-TyrlEJjh3SwBaGowM+f096GM2WGfDcxW+RWqspAB7rU=";
+  vendorHash = "sha256-VLZLPM1/a1Lf5ggk4pwB/AL+Drrdfmm3f9DYjvpBKcA=";
 
   subPackages = [ "cmd/topf" ];
+
+  ldflags = [ "-X main.version=v${finalAttrs.version}" ];
 
   meta = {
     description = "Talos Orchestrator by PostFinance";
