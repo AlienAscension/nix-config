@@ -135,6 +135,9 @@
     enable = true;
     enableDefaultConfig = false;
 
+    # Lima writes one ssh.config per instance, defining the host lima-<name>.
+    includes = [ "~/.lima/*/ssh.config" ];
+
     settings = {
       "*" = {
         IdentitiesOnly = true;
