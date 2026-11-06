@@ -44,10 +44,9 @@
       fgh = "flux get hr -A";
 
       # Directory navigation
-      kws = "cd ~/Dokumente/kubernetes/";
-      kwsf = "cd ~/Dokumente/kubernetes/fluxcd/";
       cdk8 = "cd ~/git/k8s-homelab/";
       cdocs = "cd ~/git/docs-homelab/";
+      cdnc = "cd ~/git/nix-config/";
 
       # lsd
       l = "lsd -1";
