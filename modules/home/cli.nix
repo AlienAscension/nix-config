@@ -120,12 +120,18 @@
         plugin = pkgs.tmuxPlugins.catppuccin;
         extraConfig = ''
           set -g @catppuccin_flavor "mocha"
+          set -g @catppuccin_window_text " #W"
+          set -g @catppuccin_window_current_text " #W"
         '';
       }
     ];
     extraConfig = ''
       set -ag terminal-overrides ",xterm-256color:RGB"
       set -g pane-base-index 1
+      # Manual window naming: don't rename to the current command, and ignore
+      # rename requests from applications.
+      setw -g automatic-rename off
+      set -g allow-rename off
     '';
   };
 
