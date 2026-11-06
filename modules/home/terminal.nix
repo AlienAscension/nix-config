@@ -13,7 +13,7 @@
 
       background-opacity = 0.85;
 
-      font-size = 14;
+      font-size = 17;
     }
     # On Linux, drop client-side decorations entirely.
     // lib.optionalAttrs pkgs.stdenv.isLinux { window-decoration = false; }
