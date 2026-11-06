@@ -115,6 +115,14 @@
     mouse = true;
     terminal = "xterm-256color";
     baseIndex = 1;
+    plugins = [
+      {
+        plugin = pkgs.tmuxPlugins.catppuccin;
+        extraConfig = ''
+          set -g @catppuccin_flavor "mocha"
+        '';
+      }
+    ];
     extraConfig = ''
       set -ag terminal-overrides ",xterm-256color:RGB"
       set -g pane-base-index 1
