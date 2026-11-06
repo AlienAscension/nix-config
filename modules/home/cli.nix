@@ -115,8 +115,10 @@
     shortcut = "a";
     mouse = true;
     terminal = "xterm-256color";
+    baseIndex = 1;
     extraConfig = ''
       set -ag terminal-overrides ",xterm-256color:RGB"
+      set -g pane-base-index 1
     '';
   };
 
