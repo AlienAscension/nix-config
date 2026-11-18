@@ -104,6 +104,8 @@
 
   programs.git.enable = true;
 
+  programs.tealdeer.enable = true;
+
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
@@ -216,7 +218,6 @@
     pass
     tree
     duf
-    tldr
     pv
     rsync
     unzip
